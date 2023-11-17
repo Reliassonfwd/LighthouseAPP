@@ -1,8 +1,10 @@
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 import "../styles/Login.css";
+import { jwtDecode } from 'jwt-decode';
 
 
 const Login = ({ setCurrUser, setShow }) => {
+
   const formRef = useRef()
   const login = async (userInfo, setCurrUser) => {
     const url = "http://localhost:3001/login"
@@ -37,6 +39,26 @@ const Login = ({ setCurrUser, setShow }) => {
     e.preventDefault()
     setShow(false)
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decoded = jwtDecode(token);
+      // Assuming the decoded token contains the user's ID in a 'sub' property
+      const userId = decoded.sub;
+      // Fetch the user data from your API
+      fetch(`http://localhost:3001/api/v1/users/${userId}`)
+        .then(response => response.json())
+        .then(data => {
+          // Set the current user in your application's state
+          setCurrUser(data);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+  }, [setCurrUser]);
+
   return (
     <div>
       <form ref={formRef} onSubmit={handleSubmit}>
