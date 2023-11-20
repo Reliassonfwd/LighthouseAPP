@@ -40,6 +40,7 @@ const Login = ({ setCurrUser, setShow }) => {
     setShow(false)
   }
 
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -47,17 +48,39 @@ const Login = ({ setCurrUser, setShow }) => {
       // Assuming the decoded token contains the user's ID in a 'sub' property
       const userId = decoded.sub;
       // Fetch the user data from your API
-      fetch(`http://localhost:3001/api/v1/users/${userId}`)
+      fetch(`http://localhost:3001/api/v1/users/${userId}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+
         .then(response => response.json())
         .then(data => {
           // Set the current user in your application's state
           setCurrUser(data);
         })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        })
+        .then(data => {
+          setCurrUser(data);
+        })
         .catch(error => {
           console.error('Error:', error);
+          if (error.message === 'Network response was not ok') {
+            // The token is likely expired, remove it from local storage
+            localStorage.removeItem('token');
+            // Update your application state to reflect that the user is no longer authenticated
+            setCurrUser(null);
+          }
         });
     }
   }, [setCurrUser]);
+
+
 
   return (
     <div>

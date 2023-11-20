@@ -322,9 +322,6 @@ Devise.setup do |config|
     jwt.expiration_time = 60.days.to_i
   end
 
-  # Be sure your application's session is set to :cookie_store
-  Rails.application.config.session_store :cookie_store, key: 'lighthouse_app_session'
-
   # Set the timeout period
   config.timeout_in = 30.minutes
 
