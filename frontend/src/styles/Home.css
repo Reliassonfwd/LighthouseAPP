@@ -9,6 +9,7 @@
   height: 200px;
   border-radius: 10px;
   background-color: #ffffff;
+  /* color: #373636; */
   margin: 5px;
 }
 
@@ -22,4 +23,31 @@ h1 {
 
 a {
   text-decoration: none;
+}
+
+.card-title {
+  /* estilos para el título */
+  color: #ffffff;
+  text-align: center;
+  font-size: large;
+  background-color: orangered;
+}
+
+.card-description {
+  /* estilos para la descripción */
+  font-size: x-small;
+}
+
+.card-price {
+  /* estilos para el precio */
+  float: left;
+  font-size: small;
+}
+
+.card-duration {
+  /* estilos para la duración */
+
+  float: right;
+  font-size: small;
+
 }

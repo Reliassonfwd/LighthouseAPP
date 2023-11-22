@@ -5,23 +5,23 @@ RSpec.describe Users::RegistrationsController, type: :controller do
     @request.env["devise.mapping"] = Devise.mappings[:user]
   end
 
-  # describe "POST #create" do
-  #   context "with valid params" do
-  #     let(:valid_attributes) do
-  #       { user: { email: 'admin@admin.com', password:'123456789', name:"Hola" } }
-  #     end
+  describe "POST #create" do
+    context "with valid params" do
+      let(:valid_attributes) do
+        { user: { email: 'admin@admin.com', password:'123456789', name:"Hola" } }
+      end
 
-  #     it "creates a new User" do
-  #       expect {
-  #         post :create, params: valid_attributes
-  #       }.to change(User, :count).by(1)
-  #     end
+      it "creates a new User" do
+        expect {
+          post :create, params: valid_attributes
+        }.to change(User, :count).by(1)
+      end
 
-  #     it "returns a 200 status code" do
-  #       post :create, params: valid_attributes
-  #       expect(response).to have_http_status(:ok)
-  #     end
-  #   end
+      it "returns a 200 status code" do
+        post :create, params: valid_attributes
+        expect(response).to have_http_status(:ok)
+      end
+    end
 
 
     context "with invalid params" do
@@ -40,5 +40,5 @@ RSpec.describe Users::RegistrationsController, type: :controller do
         expect(response).to have_http_status(:unprocessable_entity)
       end
     end
-  # end
+  end
 end

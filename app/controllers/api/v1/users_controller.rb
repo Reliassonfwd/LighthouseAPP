@@ -1,9 +1,8 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  skip_before_action :verify_authenticity_token
+  skip_before_action :verify_authenticity_token, if: :devise_controller?
 
-  
 
 
   def index
@@ -40,8 +39,15 @@ class Api::V1::UsersController < ApplicationController
 
   private
 
+  # def set_user
+  #   @user = User.find(params[:id])
+  # end
+
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
+    unless @user
+      render json: { error: 'User not found' }, status: :not_found
+    end
   end
 
   def user_params

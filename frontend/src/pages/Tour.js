@@ -1,22 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import "../styles/Home.css";
 import { Link } from "react-router-dom";
 import logoImg from "../images/lighthouse_logo.png";
 
-const cards = [...Array(28)].map((_, i) => ({
-  id: i,
-  content: `Card ${i + 1}`,
-}));
+
 
 const Tour = () => {
   const [currentPage, setCurrentPage] = useState(1);
+  const [cards, setCards] = useState([]);
   const cardsPerPage = 14;
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/api/v1/tours')
+      .then(response => {
+        setCards(response.data);
+      })
+      .catch(error => {
+        console.error('Hubo un error al obtener los datos:', error);
+      });
+  }, []);
 
   const indexOfLastCard = currentPage * cardsPerPage;
   const indexOfFirstCard = indexOfLastCard - cardsPerPage;
   const currentCards = cards.slice(indexOfFirstCard, indexOfLastCard);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
 
   return (
     <>
@@ -30,7 +40,13 @@ const Tour = () => {
         <div className="card-grid">
           {currentCards.map((card) => (
             <div className="card" key={card.id}>
-              {card.content}
+              <h2 className="card-title">{card.name}</h2>
+              <p className="card-description">{card.description}</p>
+              <p className="card-price">{`Price: ${card.price}`}</p>
+              <p className="card-duration">{`Duration: ${card.duration}`}</p>
+              <Link className="reserva" to="/Reservation">
+                <h1>Reservar</h1>
+              </Link>
             </div>
           ))}
         </div>
