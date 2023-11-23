@@ -7,7 +7,7 @@ class Role < ApplicationRecord
   
 
   validates :resource_type,
-            :inclusion => { :in => Rolify.resource_types },
+            :inclusion => { :in => Rolify.resource_types, message: "is not included in the list" },
             :allow_nil => true
 
   scopify

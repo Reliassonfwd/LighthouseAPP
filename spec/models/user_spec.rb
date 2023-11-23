@@ -1,3 +1,4 @@
+# spec/models/user_spec.rb
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -13,22 +14,17 @@ RSpec.describe User, type: :model do
   end
 
   it "is valid with valid attributes" do
-    user = User.new(
-      email: 'admin@admin.com',
-      password: '12345678',
-      password_confirmation: '12345678'
-    )
+    user = FactoryBot.build(:user)
     expect(user).to be_valid
   end
 
   it "is not valid without an email" do
-    user = User.new(email: "admin@admin.com")
+    user = FactoryBot.build(:user, email: nil)
     expect(user).to_not be_valid
   end
 
-
   it "is not valid without a password" do
-    user = User.new(password: 12345678)
+    user = FactoryBot.build(:user, password: nil)
     expect(user).to_not be_valid
   end
 end

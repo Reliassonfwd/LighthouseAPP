@@ -4,7 +4,6 @@ class Api::V1::UsersController < ApplicationController
   skip_before_action :verify_authenticity_token, if: :devise_controller?
 
 
-
   def index
     @users = User.all
     render json: @users
@@ -38,10 +37,6 @@ class Api::V1::UsersController < ApplicationController
   end
 
   private
-
-  # def set_user
-  #   @user = User.find(params[:id])
-  # end
 
   def set_user
     @user = User.find_by(id: params[:id])

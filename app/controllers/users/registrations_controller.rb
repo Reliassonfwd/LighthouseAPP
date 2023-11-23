@@ -4,17 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   include RackSessionsFix
   respond_to :json
 
-  before_action :set_headers
 
-  def set_headers
-    if request.method == 'OPTIONS'
-      headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
-      headers['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS'
-      headers['Access-Control-Allow-Headers'] = 'Content-Type'
-      headers['Access-Control-Max-Age'] = '1728000'
-      head :ok
-    end
-  end
 
   def create
     build_resource(sign_up_params)
