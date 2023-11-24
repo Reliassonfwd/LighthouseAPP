@@ -1,53 +1,105 @@
+/* Estilos generales de la cuadrícula de tarjetas */
+.imginfo {
+  width: 100%;
+
+}
+/* .imgintro {
+  width: 100%;
+
+} */
+
 .card-grid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: space-around; /* Cambié a 'space-around' para mejorar el espaciado */
+  gap: 20px; /* Agregué espacio entre las tarjetas */
 }
 
+/* Estilos generales de cada tarjeta */
 .card {
-  width: 200px;
-  height: 200px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  /* color: #373636; */
-  margin: 5px;
+  background-color: #f8f8f8; /* Cambié a un tono más suave */
+  margin: 10px;
+  overflow: hidden;
+  width: calc(
+    45% - 20px
+  ); /* Ajusté el ancho y agregué márgenes para mejorar la apariencia */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); /* Hice la sombra más sutil */
+  border-radius: 15px; /* Aumenté el radio de borde */
+  transition: transform 0.3s ease-in-out; /* Agregué una transición suave */
 }
 
+.card:hover {
+  transform: scale(1.05); /* Efecto de escala al pasar el ratón para resaltar */
+}
+
+/* Estilos para el título de la tarjeta */
 h1 {
-  font-size: 2.5rem;
-  color: rgb(227, 26, 26);
-  background-color: #373636;
+  font-size: 2rem; /* Reduje ligeramente el tamaño del título */
+  color: #333; /* Cambié el color del texto a un tono más oscuro */
   text-align: center;
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 0; /* Eliminé el margen inferior para acercar el título al borde superior de la tarjeta */
 }
 
-
+/* Estilos para el enlace */
 a {
   text-decoration: none;
+  color: inherit;
 }
 
+/* Estilos para el título de la tarjeta */
 .card-title {
-  /* estilos para el título */
-  color: #ffffff;
+  color: #333;
   text-align: center;
-  font-size: large;
-  background-color: orangered;
+  font-size: 1.2rem; /* Ajusté el tamaño del título */
+  padding: 10px;
+  background-color: orangered; /* Cambié el color de fondo a un tono de naranja más suave */
+  border-radius: 0 0 15px 15px; /* Añadí bordes redondeados solo en la parte inferior */
 }
 
+/* Estilos para la descripción */
 .card-description {
-  /* estilos para la descripción */
-  font-size: x-small;
+  font-size: 1rem; /* Ajusté el tamaño del texto de la descripción */
+  padding: 15px;
+  color: #555; /* Cambié el color del texto a un tono más oscuro */
 }
 
-.card-price {
-  /* estilos para el precio */
-  float: left;
-  font-size: small;
+/* Estilos para la información adicional (precio y duración) */
+.card-info {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 15px;
 }
 
+.card-price,
 .card-duration {
-  /* estilos para la duración */
+  font-size: 0.9rem; /* Ajusté el tamaño del texto de precio y duración */
+  color: #777; /* Cambié el color del texto a un tono más oscuro */
+}
 
-  float: right;
-  font-size: small;
+/* Estilos para el botón de reserva */
+.reserva {
+  border-radius: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
 
+.pagination {
+  margin-bottom: 15px;
+  border: none;
+  color: #fff;
+  padding: 14px 28px;
+  cursor: pointer;
+  border-radius: 50px;
+  font-weight: bold;
+  font-size: 1rem;
+  background-color: #f85307;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.pagination:hover {
+  background-color: #e64d00;
 }

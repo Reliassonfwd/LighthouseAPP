@@ -18,6 +18,7 @@ class Api::V1::ToursController < ApplicationController
 
   def create
     @tour = Tour.new(tour_params)
+    @tour.cover_image.attach(params[:cover_image])
     if @tour.save
       redirect_to @tour, notice: 'Tour was successfully created.'
     else
@@ -38,12 +39,22 @@ class Api::V1::ToursController < ApplicationController
     redirect_to tours_url, notice: 'Tour was successfully destroyed.'
   end
 
+  def add_image
+    @tour = Tour.find(params[:id])
+    image_file = params[:image]
+
+    # Asocia la imagen con el tour a través de Active Storage
+    @tour.cover_image.attach(io: image_file.open, filename: image_file.original_filename)
+
+    render json: { message: 'Image added successfully' }
+  end
+
   private
     def set_tour
       @tour = Tour.find(params[:id])
     end
 
     def tour_params
-      params.require(:tour).permit(:name, :description, :duration, :price, :availability, :company_id)
+      params.require(:tour).permit(:name, :description, :duration, :price, :availability, :company_id, :cover_image)
     end
 end
