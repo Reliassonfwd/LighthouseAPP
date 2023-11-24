@@ -16,15 +16,6 @@ class Api::V1::ToursController < ApplicationController
 
   def edit;end
 
-  def create
-    @tour = Tour.new(tour_params)
-    @tour.cover_image.attach(params[:cover_image])
-    if @tour.save
-      redirect_to @tour, notice: 'Tour was successfully created.'
-    else
-      render :new
-    end
-  end
 
   def update
     if @tour.update(tour_params)
@@ -41,12 +32,13 @@ class Api::V1::ToursController < ApplicationController
 
   def add_image
     @tour = Tour.find(params[:id])
-    image_file = params[:image]
+    image_filename = "tour_#{params[:id]}.jpg"
 
-    # Asocia la imagen con el tour a través de Active Storage
-    @tour.cover_image.attach(io: image_file.open, filename: image_file.original_filename)
+    @tour.image.attach(io: File.open("C:\\Users\\U!\\Desktop\\Lighthouse img\\#{image_filename}"), filename: image_filename, content_type: 'image/jpg')
+    
+    image_url =Rails.application.routes.url_helpers.url_for(@tour.image)
 
-    render json: { message: 'Image added successfully' }
+    render json: { message: 'Image uploaded successfully', url: image_url }
   end
 
   private

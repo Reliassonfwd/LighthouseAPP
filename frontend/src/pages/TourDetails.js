@@ -27,7 +27,7 @@ const TourDetails = () => {
       <p className='pdiv'>{tour && tour.duration}</p>
       <br />
       <br />
-      <Link className='adiv' to="/Payments">Ir a Pago</Link>
+      <Link className='adiv' to="/Payments">Payment</Link>
       <br />
       <br />
       <br />

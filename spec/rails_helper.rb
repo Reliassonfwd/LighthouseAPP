@@ -39,8 +39,7 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 
-
-
+ 
   config.include Devise::Test::ControllerHelpers, type: :controller
 
   config.include FactoryBot::Syntax::Methods
