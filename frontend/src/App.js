@@ -7,10 +7,26 @@ import Reservation from "./pages/Reservation";
 import User from "./components/User";
 import TourDetails from "./pages/TourDetails";
 import "../src/App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { jwtDecode } from 'jwt-decode';
+import Login from './pages/Login';
 
 function App() {
   const [currUser, setCurrUser] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      try {
+        const user = jwtDecode(token);
+        setCurrUser(user);
+        setLoggedIn(true);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  }, []);
 
   return (
     <>
@@ -20,11 +36,11 @@ function App() {
           element={<Navbar isLoggedIn={currUser} setCurrUser={setCurrUser} />}
         >
           <Route index element={<Tour />} />
-          <Route path="payments" element={<Payments />} />
-          <Route path="reservation" element={<Reservation />} />
+          <Route path="payments" element={loggedIn ? <Payments /> : <Login setCurrUser={setCurrUser} />} />
+          <Route path="reservation" element={loggedIn ? <Reservation /> : <Login setCurrUser={setCurrUser} />} />
           <Route
             path="login"
-            element={<User currUser={currUser} setCurrUser={setCurrUser} />}
+            element={<User currUser={currUser} setCurrUser={setCurrUser} setLoggedIn={setLoggedIn} />}
           />
           <Route path="/tour-details/:tourId" element={<TourDetails />} />
         </Route>

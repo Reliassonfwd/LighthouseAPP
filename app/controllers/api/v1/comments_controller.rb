@@ -1,9 +1,11 @@
 class Api::V1::CommentsController < ApplicationController
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_comment, only: [:show, :edit, :update, :destroy, :create]
+
+
 
   def index
-    @comments = Comment.all
-    render json: @comments
+    @comments = Comment.includes(:user, :tour).all
+    render json: @comments.as_json(include: { user: { only: [:name] }, tour: { only: [:name] } })
   end
 
   def show
@@ -19,9 +21,9 @@ class Api::V1::CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     if @comment.save
-      redirect_to @comment, notice: 'Comment was successfully created.'
+      render json: @comment, status: :created
     else
-      render :new
+      render json: @comment.errors, status: :unprocessable_entity
     end
   end
 

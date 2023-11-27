@@ -29,6 +29,9 @@ gem 'jsonapi-serializer', '~> 2.2'
 
 
 
+
+
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
@@ -60,6 +63,9 @@ group :development, :test do
   gem 'rspec-rails', '~> 5.0'
 
   gem 'factory_bot_rails', '~> 6.4'
+
+  gem 'pry-byebug', '~> 3.10', '>= 3.10.1'
+  
 
 end
 

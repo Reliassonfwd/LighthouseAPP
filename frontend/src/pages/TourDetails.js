@@ -7,12 +7,47 @@ import "../styles/Details.css"
 const TourDetails = () => {
   const { tourId } = useParams();
   const [tour, setTour] = useState(null);
+  const [comment, setComment] = useState('');
+  const [rating, setRating] = useState(1);
+  const userId = localStorage.getItem('userId');
+  const [comments, setComments] = useState([]);
+
+
+  const handleCommentSubmit = async (event) => {
+    event.preventDefault();
+
+    // Verificar que los valores son válidos antes de hacer la solicitud POST
+    if (!userId || !tourId || !comment || rating < 1 || rating > 10) {
+      console.error('Invalid input values');
+      return;
+    }
+
+    try {
+      const response = await axios.post('http://localhost:3001/api/v1/comments', {
+        comment_text: comment,
+        rating,
+        user_id: userId,
+        tour_id: tourId,
+      });
+
+      if (response.status === 200) {
+        setComment('');
+        setComments([...comments, response.data]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     const fetchTourDetails = async () => {
       if (tourId) {
         const response = await axios.get(`http://localhost:3001/api/v1/tours/${tourId}`);
         setTour(response.data);
+
+
+        const commentsResponse = await axios.get(`http://localhost:3001/api/v1/comments?tourId=${tourId}`);
+        setComments(commentsResponse.data);
       }
     };
 
@@ -30,6 +65,29 @@ const TourDetails = () => {
       <Link className='adiv' to="/Payments">Payment</Link>
       <br />
       <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+
+      <form onSubmit={handleCommentSubmit}>
+        <input placeholder='Feedback' value={comment} onChange={e => setComment(e.target.value)} />
+        <input className='rating' type="number" min="1" max="10" value={rating} onChange={e => setRating(e.target.value)} />
+        <button className='buttonfeedback' type="submit">Submit</button>
+      </form>
+      <br />
+      <br />
+      <div className='divcomments'>
+        {comments.map((comment, index) => (
+          <div key={index}>
+            <p className='ratingcomment' >tour: {comment.tour && comment.tour.name}</p>
+            <p className='namecomment' >Name: {comment.user && comment.user.name}</p>
+            <p className='commenttext'>{comment.comment_text}</p>
+            <p className='ratingcomment'>Rating: {comment.rating}</p>
+          </div>
+        ))}
+      </div>
       <br />
       <br />
       <br />

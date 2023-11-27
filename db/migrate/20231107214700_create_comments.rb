@@ -3,7 +3,7 @@ class CreateComments < ActiveRecord::Migration[7.0]
     create_table :comments do |t|
 
       t.text :comment_text 
-      t.integer :decimal
+      t.integer :rating
 
       t.timestamps
     end
