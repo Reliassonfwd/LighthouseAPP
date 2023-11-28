@@ -1,10 +1,15 @@
 class Api::V1::CommentsController < ApplicationController
-  before_action :set_comment, only: [:show, :edit, :update, :destroy, :create]
-
-
+  before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
   def index
-    @comments = Comment.includes(:user, :tour).all
+    if params[:tourId]
+      # Si se proporciona un tourId, filtra los comentarios por ese tourId
+      @comments = Comment.includes(:user, :tour).where(tour_id: params[:tourId])
+    else
+      # Si no se proporciona un tourId, devuelve todos los comentarios
+      @comments = Comment.includes(:user, :tour).all
+    end
+
     render json: @comments.as_json(include: { user: { only: [:name] }, tour: { only: [:name] } })
   end
 

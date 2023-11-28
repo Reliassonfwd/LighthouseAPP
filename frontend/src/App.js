@@ -36,8 +36,8 @@ function App() {
           element={<Navbar isLoggedIn={currUser} setCurrUser={setCurrUser} />}
         >
           <Route index element={<Tour />} />
-          <Route path="payments" element={loggedIn ? <Payments /> : <Login setCurrUser={setCurrUser} />} />
-          <Route path="reservation" element={loggedIn ? <Reservation /> : <Login setCurrUser={setCurrUser} />} />
+          <Route path="payments" element={loggedIn ? <Payments /> : <Login setCurrUser={setCurrUser} setLoggedIn={setLoggedIn} />} />
+          <Route path="reservation" element={loggedIn ? <Reservation /> : <Login setCurrUser={setCurrUser} setLoggedIn={setLoggedIn} />} />
           <Route
             path="login"
             element={<User currUser={currUser} setCurrUser={setCurrUser} setLoggedIn={setLoggedIn} />}

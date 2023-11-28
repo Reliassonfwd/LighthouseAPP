@@ -1,8 +1,6 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
 import "../styles/Login.css";
 import { jwtDecode } from "jwt-decode";
-
-
 
 const Login = ({ setCurrUser, setLoggedIn, setShow }) => {
   const formRef = useRef();
@@ -22,7 +20,11 @@ const Login = ({ setCurrUser, setLoggedIn, setShow }) => {
       if (!response.ok) {
         throw data.error;
       }
-      localStorage.setItem("token", response.headers.get("Authorization"));
+      const token = response.headers.get("Authorization");
+      localStorage.setItem("token", token);
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.sub;
+      localStorage.setItem('userId', userId);
       setCurrUser(data);
       setLoggedIn(true);
     } catch (error) {

@@ -3,10 +3,24 @@ import { Link, Outlet } from "react-router-dom";
 import "../styles/Navbar.css";
 
 const Navbar = ({ isLoggedIn, setCurrUser }) => {
-  const handleLogout = () => {
-    // Aquí podrías realizar cualquier lógica adicional antes de cerrar sesión si es necesario
-    // Luego, llama a la función setCurrUser para actualizar el estado de inicio de sesión
-    setCurrUser(null);
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/logout", {
+        method: "delete",
+        headers: {
+          "content-type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw data.error;
+      }
+      localStorage.removeItem("token");
+      setCurrUser(null);
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   return (
@@ -29,11 +43,9 @@ const Navbar = ({ isLoggedIn, setCurrUser }) => {
             <li className="Log">
               <Link to="login">Login</Link>
             </li>
-
-          )
-          }
+          )}
           <li>
-            <Link to="reservation">About Me</Link>
+            <Link to="reservation">Active Reserves</Link>
           </li>
         </ul>
       </nav>

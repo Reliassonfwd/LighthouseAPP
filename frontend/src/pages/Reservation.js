@@ -3,7 +3,7 @@ import React from "react";
 const Reservation = () => {
   return (
     <div>
-      <h1>Abot Me</h1>
+      <h1>Active Reserves</h1>
     </div>
   );
 };

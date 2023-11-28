@@ -16,7 +16,11 @@ const TourDetails = () => {
   const handleCommentSubmit = async (event) => {
     event.preventDefault();
 
-    // Verificar que los valores son válidos antes de hacer la solicitud POST
+    console.log('userId:', userId);
+    console.log('tourId:', tourId);
+    console.log('comment:', comment);
+    console.log('rating:', rating);
+
     if (!userId || !tourId || !comment || rating < 1 || rating > 10) {
       console.error('Invalid input values');
       return;
@@ -32,7 +36,8 @@ const TourDetails = () => {
 
       if (response.status === 200) {
         setComment('');
-        setComments([...comments, response.data]);
+        setRating(1);
+        setComments(prevComments => [...prevComments, response.data]); 
       }
     } catch (error) {
       console.error(error);

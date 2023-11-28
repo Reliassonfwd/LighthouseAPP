@@ -21,10 +21,10 @@ const Logout = ({ setCurrUser }) => {
       console.log("error", error);
     }
   };
-  const handleClick = (e) => {
-    e.preventDefault();
-    logout(setCurrUser);
-  };
+  // const handleClick = (e) => {
+  //   e.preventDefault();
+  //   logout(setCurrUser);
+  // };
   return (
     <div>
       <p className="textintro">
@@ -32,7 +32,7 @@ const Logout = ({ setCurrUser }) => {
         in the area. Thank you for being part of the family, take advantage and
         live the experience!
       </p>
-      <img className="imginfo" src={lighthouse_logo} />
+      <img className="imginfo" src={lighthouse_logo} alt=""/>
       <br />
       <br />
       <br />
