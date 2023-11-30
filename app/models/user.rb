@@ -4,8 +4,8 @@ class User < ApplicationRecord
 
   rolify
 
-  has_many :bookings
-  has_many :comments
+  has_many :bookings, dependent: :destroy
+  has_many :comments, dependent: :destroy
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
 

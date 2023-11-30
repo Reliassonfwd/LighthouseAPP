@@ -6,6 +6,16 @@ class Api::V1::ToursController < ApplicationController
     render json: @tours
   end
 
+  def create
+  @tour = Tour.new(tour_params)
+
+  if @tour.save
+    render json: @tour, status: :created
+  else
+    render json: @tour.errors, status: :unprocessable_entity
+  end
+  end
+
   def show
     render json: @tour
   end
@@ -17,13 +27,20 @@ class Api::V1::ToursController < ApplicationController
   def edit;end
 
 
-  def update
+def update
+  @tour = Tour.find(params[:id])
+
+  # Comprueba si el usuario actual es un administrador
+  if current_user.admin?
     if @tour.update(tour_params)
-      redirect_to @tour, notice: 'Tour was successfully updated.'
+      render json: @tour
     else
-      render :edit
+      render json: @tour.errors, status: :unprocessable_entity
     end
+  else
+    render json: { error: 'No tienes permiso para actualizar este tour' }, status: :forbidden
   end
+end
 
   def destroy
     @tour.destroy
@@ -46,7 +63,7 @@ class Api::V1::ToursController < ApplicationController
       @tour = Tour.find(params[:id])
     end
 
-    def tour_params
-      params.require(:tour).permit(:name, :description, :duration, :price, :availability, :company_id, :cover_image)
-    end
+  def tour_params
+    params.require(:tour).permit(:name, :description, :duration, :price, :availability, :company_id, :quantity, :includes)
+  end
 end

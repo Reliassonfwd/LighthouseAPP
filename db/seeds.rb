@@ -1,76 +1,54 @@
-# Seeding user_types
-# admin = UserType.create!(user_type: 'Admin')
-# customer = UserType.create!(user_type: 'Customer')
-
-# # Seeding users
-# user1 = User.create!(name: 'John Doe', email: 'john@example.com', password: 'password', user_type_id: admin.id)
-# user2 = User.create!(name: 'Jane Doe', email: 'jane@example.com', password: 'password', user_type_id: customer.id)
 
 # Seeding companies
-# company = Company.create(name: 'Costa Cat', description: 'Our COSTA CAT I is a luxury, 55 foot, fully air-conditioned catamaran. The COSTA CAT II, our newest addition, is a 39 foot, open-air catamaran. Both luxury catamarans cruise from the world class Los Sueños Resort & Marina.', address: 'Los Sueños Marina, Herradura, Costa Rica', contact_info: 'www.costacat.com')
+# company1 = Company.create(name: 'Costa Cat', description: 'Our COSTA CAT I is a luxury, 55 foot, fully air-conditioned catamaran. The COSTA CAT II, our newest addition, is a 39 foot, open-air catamaran. Both luxury catamarans cruise from the world class Los Sueños Resort & Marina.', address: 'Los Sueños Marina, Herradura, Costa Rica', contact_info: 'www.costacat.com')
+# company2 = Company.create(name: 'Mangle Tours', description: 'Puntarenas-based tour operator specializing in providing unique water adventures and unforgettable experiences.', address: 'Puntarenas', contact_info: 'https://mangle-tours.negocio.site/')
+# company3 = Company.create(name: 'Cocos Tours', description: 'tours to the nearest islands and beaches', address: 'Puntarenas', contact_info: 'https://www.facebook.com/cocospuntarenas/')
+# company4 = Company.create(name: 'Blue Magic Tours', description: 'A beautiful boat that will take you to the most beautiful beaches in puntarenas', address: 'Puntarenas', contact_info: 'www.blue-magic.com')
+# company5 = Company.create(name: 'Calypso Cruises', description: 'a catamaran that takes you to the most beautiful beach in punarenas', address: 'Puntarenas', contact_info: 'www.Calypso-cruises.com')
 
-company2 = Company.create(name: 'Capsule Corp', description: 'a super futuristic corporation', address: 'West Capital', contact_info: 'www.capsule-corp.com')
-company3= Company.create(name: 'ACME', description: 'world famous industry', address: 'Looney toons', contact_info: 'www.acme.com')
-company4 = Company.create(name: 'Stark industries', description: 'Worlds best defense industry', address: 'New York', contact_info: 'www.starkinc.com')
-company5 = Company.create(name: 'Wayne Enterprise', description: 'The best company in DC Comics ', address: 'Gotham City', contact_info: 'www.wayneenterprise.com')
-company6 = Company.create(name: 'Duff', description: 'Worlds largest beer company', address: 'Springfield', contact_info: 'www.duff.com')
-company7 = Company.create(name: 'Oscorp', description: 'Leading biotech company', address: 'New York', contact_info: 'www.oscorp.com')
-company8 = Company.create(name: 'Umbrella Corporation', description: 'Secret Farmaceutic Empire', address: 'Racoon City', contact_info: 'www.umbrella-corp.com')
-company9 = Company.create(name: 'Wonka', description: 'Worlds largest chocolate company', address: 'Colorado', contact_info: 'www.wonka.com')
 
 
 
 # Seeding tours
-tour1 = Tour.create(name: 'Tour to Namekusein', description: 'visit namekusein with us, with the fastest ships', duration: '2 days', price: 1000 , availability: true, company_id:2)
+tour1 = Tour.create(name: 'Tour to Isla Tortuga', description: 'we will take you to the pretiest beach in Puntarenas', duration: '8 hours', price: 150 , availability: true, company_id:1, quantity: 70 , includes: 'water, iced tea, coffe, fruits, lunch, snorkel, banana boat and coctails')
 
-tour2 = Tour.create(name: 'Tour to Kamisamas house', description: 'visit the sanctuary of kamisama and train y the time chamber', duration: '10 hours', price: 200 , availability: true, company_id:2)
+tour2 = Tour.create(name: 'Private tour', description: 'you can make your own tour', duration: '8 hours', price: 3000 , availability: true, company_id:10, quantity: 50 , includes: 'water, iced tea, coffe, fruits, lunch, snorkel, banana boat and coctails, kayaks, jet-ski, paddle boards ')
 
-tour3 = Tour.create(name: 'Tour to Looney Toons world', description: 'visit Toon Land where Michael Jordan an Lebron James had played bascketball', duration: '8 hours', price: 300 , availability: true, company_id:3)
+tour3 = Tour.create(name: 'San Lucas Tour', description: 'a trip to Isla San Lucas, to the beach and the famous abandoned prision', duration: '6 hours', price:120 , availability: true, company_id:10, quantity:70 , includes:'water, iced tea, coffe, fruits, lunch, snorkel, banana boat and coctails')
 
-tour4 = Tour.create(name: 'Tour to new Asgard', description: 'lets go visit where the asgardians live, meet thor and valkyrie', duration: '12 hours', price: 750 , availability: true, company_id:4)
+tour4 = Tour.create(name: 'Whales and Dolphin sightseeing', description: 'Let go and search for whales and dolfin so we can see them in their natural habit', duration: '5 hours', price: 80 , availability: true, company_id:10, quantity: 50 , includes:'water, iced tea, coffe, fruits, lunch, snorkel, banana boat and coctails')
 
-tour5 = Tour.create(name: 'Tour to Avengers Tower', description: 'visit the tower where the avengers are', duration: '6 hours', price:500 , availability: true, company_id:4)
+tour5 = Tour.create(name: 'Scuba tour', description: 'Learn how to scuba dive near a island full of fish', duration: '6 hours', price: 100 , availability: true, company_id:10, quantity: 45 , includes:'water, iced tea, coffe, fruits, lunch,coctails')
 
-tour6 = Tour.create(name: 'Tour to Arkham asylum', description: 'visit where the most lunatic criminals of gotham city are ', duration: '5 hours', price: 400 , availability: true, company_id:5)
+tour6 = Tour.create(name: 'Isla del coco Tour', description: 'a tour to the most beautiful island in Costa Rica', duration: '3 days', price: 500 , availability: true, company_id:10, quantity: 40 , includes:'water, iced tea, coffe, fruits, breakfast, lunch, dinner, snorkel, banana boat and coctails')
 
-tour7 = Tour.create(name: 'Tour to Wayne Mansion', description: 'come and visit the mansion where Bruce Wayne lives', duration: '5 hours', price: 250 , availability: true, company_id:5)
+tour7 = Tour.create(name: 'Fishing Tour', description: 'lets go have fun and fish', duration: '7 hours', price: 100 , availability: true, company_id:10, quantity: 25 , includes:'water, iced tea, coffe, fruits, lunch, snorkel, banana boat and coctails')
 
-tour8 = Tour.create(name: 'Tour to the Batcave', description: 'visit the cave where batman operates', duration: '4 hours', price:375 , availability: true, company_id:5)
+tour8 = Tour.create(name: 'Sunset Tour', description: 'lets go and see a beautiful sunset and enjoy all the colors it has to offer', duration: '3 hours', price: 60 , availability: true, company_id:10, quantity: 70, includes: 'water, iced tea, coffe, fruits, dinner, snorkel, banana boat and coctails')
 
-tour9 = Tour.create(name: 'Tour to Springfield', description: 'lets go and visit springfield', duration: '4 hours', price: 280 , availability: true, company_id:6)
+tour9 = Tour.create(name: 'Isla San Lucas tour', description: 'A historical tour in the San Lucas Island National Park will take you on a fascinating journey through time. This island, once home to a notorious prison, offers a rich history that includes elements of crime, punishment, and injustices.', duration: '8 hours', price: 80 , availability: true, company_id:11, quantity: 20 , includes:'National Park entrance,Fresh fruit,Bottled water,Tour guide (English and Spanish),Life vests, Dolphin watching.')
 
-tour10 = Tour.create(name: 'Tour to Duff Factory', description: 'visit the largest beer factory in Springfield', duration: '3 hours', price:150 , availability: true, company_id:6)
+tour10 = Tour.create(name: 'Tortuga Island Tour', description: 'A tour to Tortuga Island is an exciting adventure that takes you to a paradisiacal island in the middle of the Gulf of Nicoya, Costa Rica. With white sandy beaches, crystal-clear waters, and lush tropical vegetation, ', duration: '8 hours', price: 80 , availability: true, company_id:11, quantity: 30 , includes: 'Fresh fruit,Lunch,Coffee,Bottled water,Tour guide (English and Spanish),Life vests,Dolphin watching,Snorkeling.' )
 
-tour11= Tour.create(name: 'Tour to the Simpsons House', description: 'lets visit the house of the famous Simpson', duration: '2 hours', price: 200 , availability: true, company_id:6)
+tour11= Tour.create(name: 'BIOLUMINESCENCE TOUR', description: 'Embark on an unforgettable nocturnal journey with our Bioluminescence Tour! Discover the fascinating world of natural light emitted by marine organisms as you explore the dark waters of the night. ', duration: '4 hours', price: 50 , availability: true, company_id:11, quantity: 25 , includes:'Fresh fruit,Lunch,Coffee,Bottled water,Tour guide (English and Spanish),Life vests,Dolphin watching,Snorkeling.')
 
-tour12= Tour.create(name: 'Tour to Oscorp', description: 'visit the oscorp tower and see all of the technolgy they have', duration: '5 hours', price: 400 , availability: true, company_id:7)
+tour12 = Tour.create(name: 'Tour to Isla Tortuga', description: 'we will take you to the pretiest beach in Puntarenas', duration: '8 hours', price: 150 , availability: true, company_id:12, quantity: 70 , includes: 'water, iced tea, coffe, fruits, lunch, snorkel, banana boat and coctails')
 
-tour13= Tour.create(name: 'Tour to Peter Parker house', description: 'visit where Peter Parker grew up', duration: '2 hours', price: 100 , availability: true, company_id:7)
+tour13 = Tour.create(name: 'Private tour', description: 'you can make your own tour', duration: '8 hours', price: 3000 , availability: true, company_id:10, quantity: 50 , includes: 'water, iced tea, coffe, fruits, lunch, snorkel, banana boat and coctails, kayaks, jet-ski, paddle boards ')
 
-tour14= Tour.create(name: 'Tour to the Empire state', description: 'get on top of the empire state with spiderman', duration: '1 hour', price: 600 , availability: true, company_id:7)
+tour3 = Tour.create(name: 'San Lucas Tour', description: 'a trip to Isla San Lucas, to the beach and the famous abandoned prision', duration: '6 hours', price:120 , availability: true, company_id:10, quantity:70 , includes:'water, iced tea, coffe, fruits, lunch, snorkel, banana boat and coctails')
 
-tour15= Tour.create(name: 'Tour to Umbrella Corp tower', description: 'visit the most highly advanced tower in the world', duration: '4 hours', price: 500 , availability: true, company_id:8)
+tour14 = Tour.create(name: 'Whales and Dolphin sightseeing', description: 'Let go and search for whales and dolfin so we can see them in their natural habit', duration: '5 hours', price: 80 , availability: true, company_id:1, quantity: 50 , includes:'water, iced tea, coffe, fruits, lunch, snorkel, banana boat and coctails')
 
-tour16= Tour.create(name: 'Tour to Umbrella corp underground secret facility', description: 'visit the underground secret facility in the desert of las vegas', duration: '6 hours', price: 700 , availability: true, company_id:8)
+tour15 = Tour.create(name: 'Scuba tour', description: 'Learn how to scuba dive near a island full of fish', duration: '6 hours', price: 100 , availability: true, company_id:12, quantity: 45 , includes:'water, iced tea, coffe, fruits, lunch,coctails')
 
-tour17= Tour.create(name: 'Tour to Zombie zoo', description: 'come and see our failed  experiments', duration: '2 hours', price: 650 , availability: true, company_id:8)
+tour16 = Tour.create(name: 'Isla del coco Tour', description: 'a tour to the most beautiful island in Costa Rica', duration: '3 days', price: 500 , availability: true, company_id:1, quantity: 40 , includes:'water, iced tea, coffe, fruits, breakfast, lunch, dinner, snorkel, banana boat and coctails')
 
-tour18= Tour.create(name: 'Tour to Racoon City', description: 'come and visit Racoon city, home of S.T.A.R.S', duration: '4 hours', price: 350 , availability: true, company_id:8)
+tour17 = Tour.create(name: 'Fishing Tour', description: 'lets go have fun and fish', duration: '7 hours', price: 100 , availability: true, company_id:13, quantity: 25 , includes:'water, iced tea, coffe, fruits, lunch, snorkel, banana boat and coctails')
 
-tour19= Tour.create(name: 'Tour to Nemesis museum', description: 'visit our museum and see Nemesis body', duration: '2 hours', price: 400 , availability: true, company_id:8)
+tour18 = Tour.create(name: 'Sunset Tour', description: 'lets go and see a beautiful sunset and enjoy all the colors it has to offer', duration: '3 hours', price: 60 , availability: true, company_id:14, quantity: 70, includes: 'water, iced tea, coffe, fruits, dinner, snorkel, banana boat and coctails')
 
-tour20= Tour.create(name: 'Tour to Willy Wonkas Chocolate Factory', description: 'Lets go and visit the worlds largest chocolate factory', duration: '7 hours', price: 800 , availability: true, company_id:9)
+tour19 = Tour.create(name: 'Isla San Lucas tour', description: 'A historical tour in the San Lucas Island National Park will take you on a fascinating journey through time. This island, once home to a notorious prison, offers a rich history that includes elements of crime, punishment, and injustices.', duration: '8 hours', price: 80 , availability: true, company_id:15, quantity: 20 , includes:'National Park entrance,Fresh fruit,Bottled water,Tour guide (English and Spanish),Life vests, Dolphin watching.')
 
-
-# Seeding payment_methods
-# payment_method1 = PaymentMethod.create(payment_type: 'Credit Card')
-# payment_method2 = PaymentMethod.create(payment_type: 'Cash')
-# payment_method2 = PaymentMethod.create(payment_type: 'Paypal')
-
-
-# Seeding bookings
-# booking = Booking.create(booking_date: Date.today, user_id: 2, tour_id: 1, payment_method_id: 1)
-
-# Seeding comments
-# comment = Comment.create(comment_text: 'Great tour! it was awsome and the crew and captain were the best', rating: 10, user_id: 2, tour_id: 1)
+tour20 = Tour.create(name: 'Tortuga Island Tour', description: 'A tour to Tortuga Island is an exciting adventure that takes you to a paradisiacal island in the middle of the Gulf of Nicoya, Costa Rica. With white sandy beaches, crystal-clear waters, and lush tropical vegetation, ', duration: '8 hours', price: 80 , availability: true, company_id:11, quantity: 30 , includes: 'Fresh fruit,Lunch,Coffee,Bottled water,Tour guide (English and Spanish),Life vests,Dolphin watching,Snorkeling.' )
 
