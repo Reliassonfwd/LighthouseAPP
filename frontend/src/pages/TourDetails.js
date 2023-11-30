@@ -13,8 +13,8 @@ const TourDetails = () => {
   const [comments, setComments] = useState([]);
 
 
-  const handleCommentSubmit = async (event) => {
-    event.preventDefault();
+  const handleCommentSubmit = async () => {
+    
 
     console.log('userId:', userId);
     console.log('tourId:', tourId);
@@ -37,7 +37,7 @@ const TourDetails = () => {
       if (response.status === 200) {
         setComment('');
         setRating(1);
-        setComments(prevComments => [...prevComments, response.data]); 
+        setComments(prevComments => [...prevComments, response.data]);
       }
     } catch (error) {
       console.error(error);
@@ -59,6 +59,7 @@ const TourDetails = () => {
     fetchTourDetails();
   }, [tourId]);
 
+  const token = localStorage.getItem('token');
   return (
     <div>
       <h1 className='h1div'>{tour && tour.name}</h1>
@@ -76,11 +77,16 @@ const TourDetails = () => {
       <br />
       <br />
 
-      <form onSubmit={handleCommentSubmit}>
-        <input placeholder='Feedback' value={comment} onChange={e => setComment(e.target.value)} />
-        <input className='rating' type="number" min="1" max="10" value={rating} onChange={e => setRating(e.target.value)} />
-        <button className='buttonfeedback' type="submit">Submit</button>
-      </form>
+      {token ? (
+        <form onSubmit={handleCommentSubmit}>
+          <input placeholder='Feedback' value={comment} onChange={e => setComment(e.target.value)} />
+          <input className='rating' type="number" min="1" max="10" value={rating} onChange={e => setRating(e.target.value)} />
+          <button className='buttonfeedback' type="submit">Submit</button>
+        </form>
+      ) : (
+        <h1>Por favor inicia sesión para comentar.</h1>
+      )}
+
       <br />
       <br />
       <div className='divcomments'>

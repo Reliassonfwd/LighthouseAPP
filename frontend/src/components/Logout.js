@@ -9,7 +9,7 @@ const Logout = () => {
         in the area. Thank you for being part of the family, take advantage and
         live the experience!
       </p>
-      <img className="imginfo" src={lighthouse_logo} alt=""/>
+      <img className="imginfo" src={lighthouse_logo} alt="" />
       <br />
       <br />
       <br />

@@ -115,6 +115,11 @@ const Payments = () => {
             <input type="number" name="numberOfPeople" min="1" onChange={handleInputChange} />
           </label>
           <br />
+          <label>
+            Tour Date:
+            <br />
+            <input type="date" name="Tour Date" onChange={handleInputChange} />
+          </label>
           <br />
           <button type="submit">Pay</button>
         </form>

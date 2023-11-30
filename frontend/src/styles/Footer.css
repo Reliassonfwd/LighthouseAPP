@@ -1,0 +1,20 @@
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  background-color: #333;
+  color: white;
+  padding: 20px;
+}
+
+.footer-section {
+  flex: 1;
+  margin: 0 20px;
+}
+
+
+
+
+
+.logocompany {
+  width: 100%;
+}

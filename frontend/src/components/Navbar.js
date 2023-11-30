@@ -24,7 +24,7 @@ const Navbar = ({ isLoggedIn, setCurrUser }) => {
   };
   return (
     <>
-      <nav>
+      <nav className="navstyle">
         <ul>
           <li>
             <Link to="/">Home</Link>

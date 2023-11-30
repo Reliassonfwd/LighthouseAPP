@@ -10,10 +10,12 @@ import "../src/App.css";
 import { useState, useEffect } from "react";
 import { jwtDecode } from 'jwt-decode';
 import Login from './pages/Login';
+import Footercomp from "./components/footer";
 
 function App() {
   const [currUser, setCurrUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
+
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -47,11 +49,7 @@ function App() {
       </Routes>
 
       <div>
-        <footer className="footer">
-          <p>
-            &copy; {new Date().getFullYear()} Copyright: PROYECTO LIGHTHOUSE{" "}
-          </p>
-        </footer>
+        <Footercomp></Footercomp>
       </div>
     </>
   );
