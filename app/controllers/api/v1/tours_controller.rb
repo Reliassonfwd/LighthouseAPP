@@ -8,6 +8,7 @@ class Api::V1::ToursController < ApplicationController
 
   def create
   @tour = Tour.new(tour_params)
+  authorize @tour
 
   if @tour.save
     render json: @tour, status: :created
@@ -29,6 +30,7 @@ class Api::V1::ToursController < ApplicationController
 
 def update
   @tour = Tour.find(params[:id])
+  authorize @tour
 
   # Comprueba si el usuario actual es un administrador
   if current_user.admin?
@@ -43,6 +45,7 @@ def update
 end
 
   def destroy
+    authorize @tour
     @tour.destroy
     redirect_to tours_url, notice: 'Tour was successfully destroyed.'
   end

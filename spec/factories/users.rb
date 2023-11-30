@@ -4,6 +4,9 @@ FactoryBot.define do
     email { 'test@example.com' }
     password { 'password' }
     jti { SecureRandom.uuid }
-    # Add other fields as necessary
+  end
+
+  factory :admin, parent: :user do
+    after(:create) { |user| user.add_role :admin }
   end
 end

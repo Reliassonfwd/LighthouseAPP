@@ -11,12 +11,12 @@
 
   namespace :api do
     namespace :v1 do
-      resources :bookings, only: [:index, :show]
-      resources :comments, only: [:index, :show]
-      resources :companies, only: [:index, :show]
-      resources :payment_methods, only: [:index, :show]
-      resources :tours, only: [:index, :show]
-      resources :users, only: [:index, :show]
+      resources :bookings
+      resources :comments
+      resources :companies
+      resources :payment_methods
+      resources :tours
+      resources :users
       root to: 'api#index'
     end
   end

@@ -66,6 +66,8 @@ group :development, :test do
 
   gem 'pry-byebug', '~> 3.10', '>= 3.10.1'
   
+  gem 'pundit-matchers', '~> 3.1', '>= 3.1.2'
+
 
 end
 

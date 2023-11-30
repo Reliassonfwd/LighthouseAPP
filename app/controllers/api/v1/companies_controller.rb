@@ -1,49 +1,50 @@
-class Api::V1::CommentsController < ApplicationController
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
+class Api::V1::CompaniesController < ApplicationController
+  before_action :set_company, only: [:show, :edit, :update, :destroy]
 
   def index
-    @comments = Comment.all
-    render json: @comments
+    @companies = Company.all
+    render json: @companies
   end
 
   def show
-    render json: @comment
+    render json: @company
   end
 
   def new
-    @comment = Comment.new
+    @company = Company.new
   end
 
-  def edit;end
+  def edit; end
 
   def create
-    @comment = Comment.new(comment_params)
-    if @comment.save
-      redirect_to @comment, notice: 'Comment was successfully created.'
+    @company = Company.new(company_params)
+    if @company.save
+      redirect_to @company, notice: 'Company was successfully created.'
     else
       render :new
     end
   end
 
   def update
-    if @comment.update(comment_params)
-      redirect_to @comment, notice: 'Comment was successfully updated.'
+    if @company.update(company_params)
+      redirect_to @company, notice: 'Company was successfully updated.'
     else
       render :edit
     end
   end
 
   def destroy
-    @comment.destroy
-    redirect_to comments_url, notice: 'Comment was successfully destroyed.'
+    @company.destroy
+    redirect_to companies_url, notice: 'Company was successfully destroyed.'
   end
 
   private
-    def set_comment
-      @comment = Comment.find(params[:id])
-    end
 
-    def comment_params
-      params.require(:comment).permit(:comment_text, :rating, :user_id, :tour_id)
-    end
+  def set_company
+    @company = Company.find(params[:id])
+  end
+
+  def company_params
+    params.require(:company).permit(:name, :description, :address, :contact_info)
+  end
 end

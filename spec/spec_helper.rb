@@ -13,6 +13,15 @@
 # it.
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+
+# rails_helper.rb or spec_helper.rb
+require 'pundit/matchers'
+
+RSpec.configure do |config|
+  config.include Pundit::Matchers
+end
+
+
 RSpec.configure do |config|
 
   # config.include JwtService

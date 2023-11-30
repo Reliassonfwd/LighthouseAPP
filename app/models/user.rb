@@ -12,5 +12,10 @@ class User < ApplicationRecord
   def generate_jwt
     JWT.encode({ id: id, exp: 60.days.from_now.to_i }, Rails.application.credentials.devise_jwt_secret_key!)
   end
+
+  def admin?
+    has_role?(:admin)
+  end
+  
 end
 
