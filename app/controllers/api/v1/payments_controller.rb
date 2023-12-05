@@ -64,4 +64,15 @@ class Api::V1::PaymentsController < ApplicationController
   def payment_params
     params.require(:payment).permit(:payment_type, :card_name, :card_number, :cvv, :expiration_date, :user_id)
   end
+
+  def encode_sensitive_data
+    self.card_number = Base64.strict_encode64(card_number.to_s)
+    self.cvv = Base64.strict_encode64(cvv.to_s)
+  end
+
+  def decode_sensitive_data
+    self.card_number = Base64.strict_decode64(card_number.to_s)
+    self.cvv = Base64.strict_decode64(cvv.to_s)
+  end
+
 end

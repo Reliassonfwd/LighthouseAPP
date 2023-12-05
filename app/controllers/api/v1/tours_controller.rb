@@ -8,7 +8,13 @@ class Api::V1::ToursController < ApplicationController
 
   # index: Recopila todos los tours y los envía en la respuesta JSON.
   def index
-    @tours = Tour.all
+    @tours = Tour.all.map do |tour|
+      if tour.image.attached?
+        tour.attributes.merge({ image: rails_blob_url(tour.image) })
+      else
+        tour.attributes
+      end
+    end
     render json: @tours
   end
 
@@ -25,11 +31,10 @@ class Api::V1::ToursController < ApplicationController
     end
   end
 
-  # show: Envía el tour especificado en la respuesta JSON.
   def show
-    render json: @tour
+    render json: @tour.as_json.merge({ image: url_for(@tour.image) })
   end
-
+  
   # new: Crea una nueva instancia de tour.
   def new
     @tour = Tour.new
@@ -67,13 +72,12 @@ class Api::V1::ToursController < ApplicationController
   # Luego, se genera una URL para la imagen y se envía en la respuesta JSON junto con un mensaje de éxito.
   def add_image
     @tour = Tour.find(params[:id])
-    image_filename = "tour_#{params[:id]}.jpg"
-
-    @tour.image.attach(io: File.open("C:\\Users\\U!\\Desktop\\Lighthouse img\\#{image_filename}"), filename: image_filename, content_type: 'image/jpg')
-    
-    image_url =Rails.application.routes.url_helpers.url_for(@tour.image)
-
-    render json: { message: 'Image uploaded successfully', url: image_url }
+    @tour.image.attach(params[:image]) # Attach the image to the tour
+      if @tour.save
+        render json: { message: 'Image was successfully attached.' }
+      else
+        render json: @tour.errors, status: :unprocessable_entity
+    end
   end
 
   private

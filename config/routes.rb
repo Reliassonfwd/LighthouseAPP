@@ -22,8 +22,11 @@ Rails.application.routes.draw do
       resources :bookings
       resources :comments
       resources :companies
-      resources :payments
-      resources :tours
+      resources :payments 
+      resources :tours do
+      post 'add_image', on: :member
+    end
+
       resources :users
       root to: 'api#index'
     end

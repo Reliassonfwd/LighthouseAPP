@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import infoimg from "../images/infoimg.jpg";
 import IMGINTRO from "../images/IMGINTRO.jpg";
 import portada1 from "../images/portada1.jpg";
+// import ImageUpload from "../components/formimage";
 
 const Tour = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -54,17 +55,25 @@ const Tour = () => {
         <img className="imginfo" src={infoimg} alt="" />
         <img className="imginfo" src={IMGINTRO} alt="" />
       </div>
-
+      <br />
+      <br />
       <div className="App">
         <div className="card-grid">
           {currentCards.map((card) => (
+
             <div className="card" data-id={card.id} key={card.id}>
+              <br />
               <h2 className="card-title">{card.name}</h2>
+              <img className="imgcard" src={card.image} alt={card.name} />
               <p className="card-description">{card.description}</p>
-              <p className="card-price">{`Price: $${card.price}`}</p>
+              <p className="card-duration">{`includes: ${card.includes}`}</p>
               <p className="card-duration">{`Duration: ${card.duration}`}</p>
+              <p className="card-price">{`Quantity: ${card.quantity} Seats Available`}</p>
+              <p className="card-price">{`Price: $${card.price}`}</p>
+              <br />
+              <br />
               {/* <Link to={{ pathname: '/tour-details', state: { tourId: card.id } }}>Reservar</Link> */}
-              <Link to={`/tour-details/${card.id}`}>Reservar</Link>
+              <Link className="reserva" to={`/tour-details/${card.id}`}>Reservar</Link>
 
             </div>
           ))}
@@ -88,7 +97,9 @@ const Tour = () => {
           >
             Next
           </button>
+
         </div>
+        {/* <ImageUpload /> */}
         <br />
         <br />
       </div>

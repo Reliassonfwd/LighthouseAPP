@@ -14,7 +14,7 @@ const TourDetails = () => {
 
 
   const handleCommentSubmit = async () => {
-    
+
 
     console.log('userId:', userId);
     console.log('tourId:', tourId);
@@ -62,6 +62,7 @@ const TourDetails = () => {
   const token = localStorage.getItem('token');
   return (
     <div>
+
       <h1 className='h1div'>{tour && tour.name}</h1>
       <p className='pdiv'>{tour && tour.description}</p>
       <p className='pdiv'>{tour && `Price: $${tour.price}`}</p>
