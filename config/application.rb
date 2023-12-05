@@ -28,5 +28,18 @@ module Lighthouse
 
 
     config.autoload_paths << Rails.root.join('app/services')
+
+    # config/application.rb
+
+config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+  address: 'wilroger26@hotmail.com.com',
+  port: 587,
+  user_name: 'LightHouse',
+  password: 'wilroger26',
+  authentication: 'plain',
+  enable_starttls_auto: true
+}
+
   end
 end

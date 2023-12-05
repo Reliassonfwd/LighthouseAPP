@@ -24,24 +24,18 @@ RSpec.describe Users::SessionsController, type: :controller do
     end
   end
 
-#   describe "DELETE #destroy" do
-#     context "when the user is logged in" do
-#     before do
-#       # Log in the user
-#       sign_in user
-#     end
+  describe "DELETE #destroy" do
+    context "when the user is logged in" do
+      before do
+        # Log in the user
+        sign_in user
+      end
 
-#   #   it "logs out the user" do
-#   #     delete :destroy
-#   #     expect(response).to have_http_status(:ok)
-#   #   end
-#   # end
-
-#   it "logs out the user" do
-#     delete :destroy, params: { id: user.id }
-#     expect(response).to have_http_status(:ok)
-#   end
-# end
+      # it "logs out the user" do
+      #   delete :destroy
+      #   expect(response).to have_http_status(:ok)
+      # end
+    end
 
     context "when the user is not logged in" do
       it "does not log out the user" do
@@ -50,3 +44,4 @@ RSpec.describe Users::SessionsController, type: :controller do
       end
     end
   end
+end

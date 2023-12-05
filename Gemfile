@@ -27,6 +27,9 @@ gem 'devise-jwt', '~> 0.11.0'
 
 gem 'jsonapi-serializer', '~> 2.2'
 
+gem 'actionmailer', require: ['action_mailer', 'action_mailer/railtie']
+
+
 
 
 

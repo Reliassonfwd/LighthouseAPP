@@ -1,9 +1,11 @@
+# Users::SessionsController
+#
+# Este controlador maneja las sesiones de los usuarios. Hereda de Devise::SessionsController.
+
 class Users::SessionsController < Devise::SessionsController
-  include RackSessionsFix
   respond_to :json
 
-  private
-
+  # respond_with: Genera un token JWT para el usuario que ha iniciado sesión y lo envía en la respuesta JSON.
   def respond_with(resource, _opts = {})
     token = resource.generate_jwt
     render json: {
@@ -15,6 +17,10 @@ class Users::SessionsController < Devise::SessionsController
     }, status: :ok
   end
 
+  # respond_to_on_destroy: Se llama cuando un usuario ha cerrado la sesión.
+  # Busca al usuario en la base de datos utilizando el token JWT de la solicitud.
+  # Si encuentra al usuario, envía una respuesta JSON con un mensaje de éxito.
+  # Si no encuentra al usuario, envía una respuesta JSON con un mensaje de error.
   def respond_to_on_destroy
     if request.headers['Authorization'].present?
       jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').last, Rails.application.credentials.devise_jwt_secret_key!).first

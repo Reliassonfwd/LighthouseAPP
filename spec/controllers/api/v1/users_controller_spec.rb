@@ -46,48 +46,9 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
     end
   end
-
-  # Add similar blocks for #create, #update, and #destroy actions
 end
 
 
 
 
 
-
-
-# require 'rails_helper'
-
-# RSpec.describe Api::V1::UsersController, type: :controller do
-#   let(:user) { create(:user) }
-
-#   describe "GET #index" do
-#     before do
-#       get :index
-#     end
-
-#     it "returns a 200 status code" do
-#       expect(response).to have_http_status(:ok)
-#     end
-
-#     it "returns all users" do
-#       expect(JSON.parse(response.body).size).to eq(User.count)
-#     end
-#   end
-
-#   describe "GET #show" do
-#     before do
-#       get :show, params: { id: user.id }
-#     end
-
-#     it "returns a 200 status code" do
-#       expect(response).to have_http_status(:ok)
-#     end
-
-#     it "returns the user" do
-#       expect(JSON.parse(response.body)["id"]).to eq(user.id)
-#     end
-#   end
-
-#   # Add similar blocks for #create, #update, and #destroy actions
-# end

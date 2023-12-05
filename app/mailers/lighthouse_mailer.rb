@@ -1,0 +1,2 @@
+class LighthouseMailer < ApplicationMailer
+end

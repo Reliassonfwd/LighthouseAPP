@@ -1,56 +1,28 @@
+# Api::V1::CommentsController
+#
+# Este controlador maneja las solicitudes a la API relacionadas con los comentarios.
+
 class Api::V1::CommentsController < ApplicationController
+  # Antes de ejecutar ciertos métodos, se ejecuta el método set_comment.
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
 
+  # index: Recopila todos los comentarios para un tour específico o todos los comentarios si no se proporciona un tourId.
   def index
     if params[:tourId]
-      # Si se proporciona un tourId, filtra los comentarios por ese tourId
       @comments = Comment.includes(:user, :tour).where(tour_id: params[:tourId])
     else
-      # Si no se proporciona un tourId, devuelve todos los comentarios
       @comments = Comment.includes(:user, :tour).all
     end
-
     render json: @comments.as_json(include: { user: { only: [:name] }, tour: { only: [:name] } })
   end
 
+  # show: Envía el comentario especificado en la respuesta JSON.
   def show
     render json: @comment
   end
 
+  # new: Crea una nueva instancia de comentario.
   def new
     @comment = Comment.new
   end
-
-  def edit;end
-
-  def create
-    @comment = Comment.new(comment_params)
-    if @comment.save
-      render json: @comment, status: :created
-    else
-      render json: @comment.errors, status: :unprocessable_entity
-    end
-  end
-
-  def update
-    if @comment.update(comment_params)
-      redirect_to @comment, notice: 'Comment was successfully updated.'
-    else
-      render :edit
-    end
-  end
-
-  def destroy
-    @comment.destroy
-    redirect_to comments_url, notice: 'Comment was successfully destroyed.'
-  end
-
-  private
-    def set_comment
-      @comment = Comment.find(params[:id])
-    end
-
-    def comment_params
-      params.require(:comment).permit(:comment_text, :rating, :user_id, :tour_id)
-    end
 end
