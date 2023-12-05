@@ -12,6 +12,7 @@ const Tour = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [cards, setCards] = useState([]);
   const cardsPerPage = 14;
+  const [isLoading, setIsLoading] = useState(true); // Nuevo estado para rastrear la carga
   // const [selectedTour, setSelectedTour] = useState(null);
   // const [relatedTours, setRelatedTours] = useState([]);
 
@@ -27,6 +28,30 @@ const Tour = () => {
       });
 
   }, []);
+
+  useEffect(() => {
+    setIsLoading(true); // Comienza la carga
+    axios
+      .get("http://localhost:3001/api/v1/tours")
+      .then((response) => {
+        setCards(response.data);
+        setIsLoading(false); // Termina la carga
+      })
+      .catch((error) => {
+        console.error("Hubo un error al obtener los datos:", error);
+        setIsLoading(false); // Termina la carga incluso si hay un error
+      });
+  }, []);
+
+
+  if (isLoading) {
+    return <body>
+      <center>
+        <div class="spinner"></div>
+      </center>
+    </body>; // O reemplaza esto con tu componente de loader
+  }
+
 
 
 
