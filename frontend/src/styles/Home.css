@@ -1,6 +1,7 @@
 /* Estilos generales de la cuadrícula de tarjetas */
 .imginfo {
   width: 100%;
+  height: 400px;
 
 }
 
@@ -10,6 +11,7 @@
 } */
 
 .imgcard {
+  margin-top: 20px;
   width: 80%;
   height: 30%;
   border-radius: 5%;
@@ -27,22 +29,24 @@
 
 /* Estilos generales de cada tarjeta */
 .card {
+  position: relative; /* Agregado para permitir la posición absoluta de los elementos hijos */
   background-color: #f8f8f8;
   margin: 10px;
   overflow: hidden;
-  width: calc(45% - 20px);
-
-  /* Ajusté el ancho y agregué márgenes para mejorar la apariencia */
+  width: calc(30% - 5px);
+  height: 485px; /* Ajusta esto a la altura que prefieras */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  /* Hice la sombra más sutil */
   border-radius: 15px;
-  /* Aumenté el radio de borde */
   transition: transform 0.3s ease-in-out;
-  /* Agregué una transición suave */
+  flex-direction: column; /* Agregado para alinear los elementos hijos verticalmente */
+  justify-content: space-around; /* Agregado para distribuir el espacio alrededor de los elementos hijos */
+  text-align: center; 
 }
 
 .card:hover {
   transform: scale(1.05);
+  box-shadow: 0 0 20px rgb(255, 102, 0);
+  transition: 0.3s;
   /* Efecto de escala al pasar el ratón para resaltar */
 }
 
@@ -94,7 +98,14 @@ a {
   padding: 10px 15px;
 }
 
-.card-price,
+  .card-price {
+  position: absolute; /* El precio ahora está posicionado absolutamente */
+  bottom: 60px; /* Ajusta esto para cambiar la distancia del precio desde la parte inferior de la tarjeta */
+  width: 100%; /* Asegura que el precio se extienda a lo ancho de la tarjeta */
+  text-align: center; /* Asegura que el precio esté centrado */
+  font-weight: bold;
+}
+
 .card-duration {
   font-size: 0.9rem;
   /* Ajusté el tamaño del texto de precio y duración */
@@ -104,7 +115,10 @@ a {
 
 /* Estilos para el botón de reserva */
 .reserva {
-
+  position: absolute; /* El botón ahora está posicionado absolutamente */
+  bottom: 10px; /* Ajusta esto para cambiar la distancia del botón desde la parte inferior de la tarjeta */
+  left: 50%; /* Centra el botón horizontalmente */
+  transform: translateX(-50%);
   border-radius: 5px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -158,6 +172,32 @@ a {
   width: 80%;
   height: 80%;
   background-color: #000;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.spinner2 {
+  display: grid;
+  place-items: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: conic-gradient(from 180deg at 50% 50%,
+      rgba(82, 0, 255, 0) 0deg,
+      #ff5900 360deg);
+  animation: spin 0.4s infinite linear;
+}
+
+.spinner2::before {
+  content: "";
+  border-radius: 50%;
+  width: 80%;
+  height: 80%;
+  background-color: #ffffff;
 }
 
 @keyframes spin {

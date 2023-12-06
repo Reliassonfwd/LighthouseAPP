@@ -23,10 +23,15 @@ class Users::SessionsController < Devise::SessionsController
   # Si no encuentra al usuario, envía una respuesta JSON con un mensaje de error.
   def respond_to_on_destroy
     if request.headers['Authorization'].present?
-      jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').last, Rails.application.credentials.devise_jwt_secret_key!).first
-      current_user = User.find(jwt_payload['sub'])
+      begin
+        jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').last, Rails.application.credentials.devise_jwt_secret_key!).first
+        current_user = User.find(jwt_payload['sub'])
+      rescue JWT::ExpiredSignature
+        # Si el token ha expirado, puedes establecer current_user a nil, o manejarlo de la manera que prefieras
+        current_user = nil
+      end
     end
-
+  
     if current_user
       render json: {
         status: 200,

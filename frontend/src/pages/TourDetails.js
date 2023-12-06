@@ -64,9 +64,11 @@ const TourDetails = () => {
     <div>
 
       <h1 className='h1div'>{tour && tour.name}</h1>
+      {/* <img className="imgcard" src={tour.image} alt={tour.name} /> */}
       <p className='pdiv'>{tour && tour.description}</p>
       <p className='pdiv'>{tour && `Price: $${tour.price}`}</p>
       <p className='pdiv'>{tour && tour.duration}</p>
+      <p className='pdiv'>{`includes: ${tour && tour.includes}`}</p>
       <br />
       <br />
       <Link className='adiv' to="/Payments">Payment</Link>

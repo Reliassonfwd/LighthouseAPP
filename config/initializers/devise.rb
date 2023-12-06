@@ -323,6 +323,6 @@ Devise.setup do |config|
   end
 
   # Set the timeout period
-  config.timeout_in = 60.minutes
+  config.timeout_in = 60.days
 
 end
