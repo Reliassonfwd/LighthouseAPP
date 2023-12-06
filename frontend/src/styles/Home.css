@@ -149,7 +149,7 @@ a {
   background: conic-gradient(from 180deg at 50% 50%,
       rgba(82, 0, 255, 0) 0deg,
       #ff5900 360deg);
-  animation: spin 1s infinite linear;
+  animation: spin 0.4s infinite linear;
 }
 
 .spinner::before {

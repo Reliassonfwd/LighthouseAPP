@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_05_141709) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_06_141934) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -45,8 +45,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_05_141709) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.bigint "tour_id", null: false
-    t.bigint "payment_method_id", null: false
-    t.index ["payment_method_id"], name: "index_bookings_on_payment_method_id"
+    t.bigint "payment_id", null: false
+    t.index ["payment_id"], name: "index_bookings_on_payment_id"
     t.index ["tour_id"], name: "index_bookings_on_tour_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
@@ -71,7 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_05_141709) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "payment_methods", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "payments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "payment_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -80,7 +80,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_05_141709) do
     t.date "expiration_date"
     t.string "cvv"
     t.bigint "user_id", null: false
-    t.index ["user_id"], name: "index_payment_methods_on_user_id"
+    t.index ["user_id"], name: "index_payments_on_user_id"
   end
 
   create_table "roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -133,7 +133,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_05_141709) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "bookings", "payment_methods"
+  add_foreign_key "bookings", "payments"
   add_foreign_key "bookings", "tours"
   add_foreign_key "bookings", "users"
   add_foreign_key "comments", "tours"
