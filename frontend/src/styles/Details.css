@@ -5,47 +5,17 @@
 
 .rating {
   width: 10%;
-  margin-left: 5px
+  margin-left: 5px;
 }
 
 .buttonfeedback {
-  margin-left: 5px
+  margin-left: 5px;
 }
-
-
 
 .h1div {
-  color: #ff6a00;
+  color: #ff8000;
   font-size: 2.5em;
   margin-bottom: 20px;
-}
-
-.divcomments {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.divcomments>div {
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-}
-
-.namecomment {
-  font-weight: bold;
-  color: #333;
-}
-
-.commenttext {
-  margin: 10px 0;
-  color: #666;
-}
-
-.ratingcomment {
-  font-size: 0.8em;
-  color: #999;
 }
 
 .pdiv {
@@ -56,7 +26,7 @@
 }
 
 .adiv {
-  background-color: #ff6a00;
+  background-color: rgb(230, 87, 5);
   color: #ffffff;
   text-decoration: none;
   font-size: 1.2em;
@@ -69,10 +39,6 @@
 }
 
 .adiv:hover {
-  background-color: #00ff15;
+  background-color: #0cfb44;
   color: #fff;
-}
-
-.imgdescription{
-
 }

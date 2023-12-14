@@ -33,7 +33,7 @@ module Lighthouse
 
 config.action_mailer.delivery_method = :smtp
 config.action_mailer.smtp_settings = {
-  address: 'wilroger26@hotmail.com.com',
+  address: 'wilroger26@hotmail.com',
   port: 587,
   user_name: 'LightHouse',
   password: 'wilroger26',

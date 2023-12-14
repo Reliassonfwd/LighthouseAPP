@@ -42,15 +42,23 @@ const ImageUpload = () => {
   };
 
   return (
-    <div>
-      <select onChange={onTourChange}>
-        {tours.map(tour => (
-          <option key={tour.id} value={tour.id}>{tour.name}</option>
-        ))}
-      </select>
-      <input type="file" onChange={onFileChange} />
-      <button onClick={onFileUpload}>Upload!</button>
-    </div>
+    <>
+      <center>
+        <div>
+
+          <input type="file" onChange={onFileChange} />
+          <br />
+          <select onChange={onTourChange}>
+            {tours.map(tour => (
+              <option key={tour.id} value={tour.id}>{tour.name}</option>
+            ))}
+          </select>
+          <br />
+          <br />
+          <button onClick={onFileUpload}>Upload</button>
+        </div>
+      </center>
+    </>
   );
 };
 

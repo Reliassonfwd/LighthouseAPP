@@ -11,8 +11,8 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     # Permite cualquier recurso, con cualquier cabecera y los métodos HTTP get, post, put, patch, delete, options y head.
     # También expone la cabecera de autorización.
     resource '*',
-             headers: :any,
-             methods: %i[get post put patch delete options head],
-             expose: [:Authorization]
+            headers: :any,
+            methods: %i[get post put patch delete options head],
+            expose: [:Authorization]
   end
 end

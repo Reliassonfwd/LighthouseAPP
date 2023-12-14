@@ -29,7 +29,7 @@ const Register = ({ setCurrUser, setShow }) => {
     const formData = new FormData(formRef.current);
     const data = Object.fromEntries(formData);
     const userInfo = {
-      user: { email: data.email, password: data.password },
+      user: { name: data.name, email: data.email, password: data.password },
     };
     Register(userInfo, setCurrUser);
     e.target.reset();

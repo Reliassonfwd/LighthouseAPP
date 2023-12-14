@@ -23,6 +23,8 @@ Rails.application.routes.draw do
       resources :comments
       resources :companies
       resources :payments 
+      resources :roles
+      resources :users_roles
       resources :tours do
       post 'add_image', on: :member
     end

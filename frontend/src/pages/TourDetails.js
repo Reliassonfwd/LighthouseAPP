@@ -1,107 +1,80 @@
-import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
-import "../styles/Details.css"
+import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Comments from "../components/Comments";
+import "../styles/Details.css";
 
 const TourDetails = () => {
   const { tourId } = useParams();
   const [tour, setTour] = useState(null);
-  const [comment, setComment] = useState('');
-  const [rating, setRating] = useState(1);
-  const userId = localStorage.getItem('userId');
-  const [comments, setComments] = useState([]);
-
-
-  const handleCommentSubmit = async () => {
-
-
-    console.log('userId:', userId);
-    console.log('tourId:', tourId);
-    console.log('comment:', comment);
-    console.log('rating:', rating);
-
-    if (!userId || !tourId || !comment || rating < 1 || rating > 10) {
-      console.error('Invalid input values');
-      return;
-    }
-
-    try {
-      const response = await axios.post('http://localhost:3001/api/v1/comments', {
-        comment_text: comment,
-        rating,
-        user_id: userId,
-        tour_id: tourId,
-      });
-
-      if (response.status === 200) {
-        setComment('');
-        setRating(1);
-        setComments(prevComments => [...prevComments, response.data]);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const [selectedTour, setSelectedTour] = useState(null);
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     const fetchTourDetails = async () => {
       if (tourId) {
-        const response = await axios.get(`http://localhost:3001/api/v1/tours/${tourId}`);
-        setTour(response.data);
-
-
-        const commentsResponse = await axios.get(`http://localhost:3001/api/v1/comments?tourId=${tourId}`);
-        setComments(commentsResponse.data);
+        try {
+          const response = await axios.get(
+            `http://localhost:3001/api/v1/tours/${tourId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setTour(response.data);
+        } catch (error) {
+          console.error("Error fetching tour details:", error);
+          // Manejar el error según tus necesidades
+        }
       }
     };
 
     fetchTourDetails();
-  }, [tourId]);
+  }, [tourId, token]);
 
-  const token = localStorage.getItem('token');
+  const handleReserveClick = () => {
+    setSelectedTour({
+      tourId: tourId,
+      name: tour.name,
+      price: tour.price,
+      includes: tour.includes,
+      // Otros detalles del tour que puedas necesitar
+    });
+  };
+
   return (
     <div>
-
-      <h1 className='h1div'>{tour && tour.name}</h1>
-      {/* <img className="imgcard" src={tour.image} alt={tour.name} /> */}
-      <p className='pdiv'>{tour && tour.description}</p>
-      <p className='pdiv'>{tour && `Price: $${tour.price}`}</p>
-      <p className='pdiv'>{tour && tour.duration}</p>
-      <p className='pdiv'>{`includes: ${tour && tour.includes}`}</p>
+      <h1 className="h1div">{tour && tour.name}</h1>
+      <p className="pdiv">{tour && tour.description}</p>
+      <p className="pdiv">{tour && `Price: $${tour.price}`}</p>
+      <p className="pdiv">{tour && tour.duration}</p>
+      <p className="pdiv">{tour && `Includes: ${tour.includes}`}</p>
       <br />
       <br />
-      <Link className='adiv' to="/Payments">Payment</Link>
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-
-      {token ? (
-        <form onSubmit={handleCommentSubmit}>
-          <input placeholder='Feedback' value={comment} onChange={e => setComment(e.target.value)} />
-          <input className='rating' type="number" min="1" max="10" value={rating} onChange={e => setRating(e.target.value)} />
-          <button className='buttonfeedback' type="submit">Submit</button>
-        </form>
-      ) : (
-        <h1>Por favor inicia sesión para comentar.</h1>
-      )}
+      <Link
+        className="adiv"
+        to={{ pathname: `/Payments/${tourId}`, state: { selectedTour } }}
+        onClick={handleReserveClick}
+      >
+        Payment
+      </Link>
 
       <br />
       <br />
-      <div className='divcomments'>
-        {comments.map((comment, index) => (
-          <div key={index}>
-            <p className='ratingcomment' >tour: {comment.tour && comment.tour.name}</p>
-            <p className='namecomment' >Name: {comment.user && comment.user.name}</p>
-            <p className='commenttext'>{comment.comment_text}</p>
-            <p className='ratingcomment'>Rating: {comment.rating}</p>
-          </div>
-        ))}
-      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+
+      <Comments tourId={tourId} userId={userId} token={token} />
+
+      <br />
+
+      <br />
+      <br />
+      <br />
       <br />
       <br />
       <br />

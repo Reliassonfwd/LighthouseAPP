@@ -1,7 +1,7 @@
 .footer-container {
   display: flex;
   justify-content: space-around;
-  background-color: #333;
+  background-color: rgb(56, 55, 55);
   color: white;
   padding: 20px;
 }

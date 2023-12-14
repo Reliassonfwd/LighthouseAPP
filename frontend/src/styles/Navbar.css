@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background-color: rgb(223, 95, 31)
+  background-color: rgb(234, 115, 4)
 }
 
 .navstyle .Log {
@@ -22,5 +22,5 @@
 }
 
 .navstyle li a:hover {
-  background-color: #111;
+  background-color: #11111185;
 }

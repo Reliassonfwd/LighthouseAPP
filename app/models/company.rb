@@ -1,9 +1,10 @@
 # Company
 #
-# Este modelo representa una compañía en la aplicación. 
-# Cada compañía puede tener muchos tours. Si la compañía se destruye, también se destruirán los tours asociados.
+# This model represents a company in the application.
+# Each company can have many tours. If the company is destroyed, the associated tours will also be destroyed.
 
 class Company < ApplicationRecord
-  # Una compañía tiene muchos tours. Si la compañía se destruye, también se destruirán los tours asociados.
+  # A company has many tours. If the company is destroyed, the associated tours will also be destroyed.
+  # This implies a dependent relationship where the existence of tours is reliant on the existence of the company.
   has_many :tours, dependent: :destroy
 end

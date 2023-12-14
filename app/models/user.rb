@@ -1,32 +1,32 @@
-# User
-#
-# Este modelo representa un usuario en la aplicación. 
-# Cada usuario puede tener muchas reservas y comentarios. 
-# Si el usuario se destruye, también se destruirán las reservas y los comentarios asociados.
-# Además, este modelo incluye funcionalidades para la autenticación y la gestión de roles.
-
 class User < ApplicationRecord
-  # Incluye la estrategia de revocación de JWT de Devise.
+  # Includes the JWT revocation strategy of Devise.
+  # This strategy ensures that a user's session can be securely managed using JSON Web Tokens.
   include Devise::JWT::RevocationStrategies::JTIMatcher
 
-  # Incluye la funcionalidad de Rolify para la gestión de roles.
+  # Includes the functionality of Rolify for role management.
+  # This allows the application to assign different roles to users, enhancing the security and functionality of the application.
   rolify
 
-  # Un usuario tiene muchas reservas. Si el usuario se destruye, también se destruirán las reservas asociadas.
+  # A user has many bookings. If the user is destroyed, the associated bookings will also be destroyed.
+  # This means that all bookings related to a specific user will be removed from the database when that user is deleted.
   has_many :bookings, dependent: :destroy
 
-  # Un usuario tiene muchos comentarios. Si el usuario se destruye, también se destruirán los comentarios asociados.
+  # A user has many comments. If the user is destroyed, the associated comments will also be destroyed.
+  # This ensures that when a user is deleted, all of its associated comments are also deleted.
   has_many :comments, dependent: :destroy
 
-  # Configura Devise para este modelo. Incluye módulos para la autenticación de base de datos, el registro, la recuperación de contraseñas, el recuerdo de sesiones, la validación y la autenticación JWT.
+  # Configures Devise for this model. Includes modules for database authentication, registration, password recovery, session remembering, validation, and JWT authentication.
+  # This provides a comprehensive set of authentication and user management features for the application.
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :jwt_authenticatable, jwt_revocation_strategy: self
 
-  # Genera un JWT para el usuario. El JWT incluye el ID del usuario y una fecha de expiración 60 días en el futuro.
+  # Generates a JWT for the user. The JWT includes the user's ID and an expiration date 60 days in the future.
+  # This method is used to create a secure token that can be used for user authentication in a stateless, secure manner.
   def generate_jwt
     JWT.encode({ id: id, exp: 60.days.from_now.to_i }, Rails.application.credentials.devise_jwt_secret_key!)
   end
 
-  # Comprueba si el usuario tiene el rol de administrador.
+  # Checks if the user has the role of administrator.
+  # This method provides a convenient way to check if a user has administrative privileges in the application.
   def admin?
     has_role?(:admin)
   end

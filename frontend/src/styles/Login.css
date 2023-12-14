@@ -14,13 +14,13 @@
 
 /* Estilos para el enlace de registro en el formulario de login */
 .Sigup1 {
-  color: rgb(249, 249, 249);
+  color: rgb(237, 128, 39);
   text-align: center;
 }
 
 /* Estilos para el texto de registro en el formulario de login */
 .Sigup {
-  color: orangered;
+  color: rgb(14, 2, 65);
 }
 
 /* Estilos para el botón de enviar en el formulario de login */
@@ -34,16 +34,17 @@
   border-radius: 50px;
   font-weight: bold;
   font-size: 1rem;
-  background-color: #f85307;
+  background-color: #f85b07;
   transition: background-color 0.3s ease-in-out;
 }
 
 .buttonlogin:hover {
-  background-color: #e64d00;
+  background-color: rgb(230, 42, 0);
 }
 
 /* Estilos para los campos de entrada en el formulario de login */
 .inputdata {
+  text-align: center;
   width: 60%;
   margin-bottom: 15px;
   border: none;

@@ -1,12 +1,12 @@
 # Users::RegistrationsController
 #
-# Este controlador maneja el registro de los usuarios. Hereda de Devise::RegistrationsController.
+# This controller handles the registration of users. It inherits from Devise::RegistrationsController.
 
 class Users::RegistrationsController < Devise::RegistrationsController
   respond_to :json
 
-  # create: Crea un nuevo usuario. Si la creación es exitosa, inicia la sesión del usuario y envía una respuesta JSON con un mensaje de éxito.
-  # Si no, envía una respuesta JSON con un mensaje de error y los errores de validación.
+  # create: Creates a new user. If the creation is successful, it starts the user's session and sends a JSON response with a success message.
+  # If not, it sends a JSON response with an error message and the validation errors.
   def create
     build_resource(sign_up_params)
 
@@ -20,8 +20,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   private
 
-  # sign_up_params: Este método se encarga de manejar la seguridad de los parámetros de registro.
-  # Requiere que los parámetros incluyan un :user y permite :email, :password y :name.
+  # sign_up_params: This method handles the security of the registration parameters.
+  # It requires the parameters to include a :user and allows :email, :password, and :name.
   def sign_up_params
     params.require(:user).permit(:email, :password, :name)
   end

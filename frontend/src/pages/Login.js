@@ -24,7 +24,7 @@ const Login = ({ setCurrUser, setLoggedIn, setShow }) => {
       localStorage.setItem("token", token);
       const decodedToken = jwtDecode(token);
       const userId = decodedToken.sub;
-      localStorage.setItem('userId', userId);
+      localStorage.setItem("userId", userId);
       setCurrUser(data);
       setLoggedIn(true);
     } catch (error) {
@@ -43,9 +43,12 @@ const Login = ({ setCurrUser, setLoggedIn, setShow }) => {
     e.target.reset();
   };
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    setShow(false);
+  const handleClick = () => {
+    if (typeof setShow === "function") {
+      setShow(false);
+    } else {
+      console.error("setShow is not a function!");
+    }
   };
 
   return (

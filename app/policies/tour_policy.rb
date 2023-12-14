@@ -1,20 +1,18 @@
-# TourPolicy
-#
-# Esta política de Pundit define las autorizaciones para las acciones de creación, actualización y destrucción en el modelo Tour.
-# Solo los usuarios con el rol de administrador pueden realizar estas acciones.
-
 class TourPolicy < ApplicationPolicy
-  # Solo los usuarios con el rol de administrador pueden crear tours.
+  # Only users with the administrator role can create tours.
+  # This method checks if the user has the role of an administrator before allowing them to create a tour.
   def create?
     user.admin?
   end
 
-  # Solo los usuarios con el rol de administrador pueden actualizar tours.
+  # Only users with the administrator role can update tours.
+  # This method checks if the user has the role of an administrator before allowing them to update a tour.
   def update?
     user.admin?
   end
 
-  # Solo los usuarios con el rol de administrador pueden destruir tours.
+  # Only users with the administrator role can destroy tours.
+  # This method checks if the user has the role of an administrator before allowing them to destroy a tour.
   def destroy?
     user.admin?
   end

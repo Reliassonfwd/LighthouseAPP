@@ -1,9 +1,10 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
 
 
-const Navbar = ({ isLoggedIn, setCurrUser }) => {
+const Navbar = ({ isLoggedIn, currUser, setCurrUser }) => {
+  const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       // Realizar una solicitud DELETE a la URL de cierre de sesión
@@ -11,27 +12,32 @@ const Navbar = ({ isLoggedIn, setCurrUser }) => {
         method: "delete",
         headers: {
           "content-type": "application/json",
-          "authorization": localStorage.getItem("token") // Pasar el token de autorización en los encabezados
+          authorization: localStorage.getItem("token"), // Pasar el token de autorización en los encabezados
         },
       });
-      const data = await response.json()
-      if (!response.ok) throw data.error // Si la respuesta no es exitosa, lanzar un error
-      localStorage.removeItem("token") // Eliminar el token de la memoria local
-      setCurrUser(null) // Establecer el usuario actual en null
+      const data = await response.json();
+      if (!response.ok) throw data.error; // Si la respuesta no es exitosa, lanzar un error
+      localStorage.removeItem("token"); // Eliminar el token de la memoria local
+      setCurrUser(null); // Establecer el usuario actual en null
     } catch (error) {
-      console.log("error", error)
+      console.log("error", error);
     }
   };
+
+  const handleHomeClick = (event) => {
+    event.preventDefault();
+    navigate("/");
+    window.location.reload();
+  };
+
   return (
     <>
       <nav className="navstyle">
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/" onClick={handleHomeClick}>Home</Link>
           </li>
-          <li>
-            <Link to="payments">Payment</Link>
-          </li>
+
           {isLoggedIn ? (
             <li className="Log">
               <Link to="/" onClick={handleLogout}>
@@ -43,9 +49,11 @@ const Navbar = ({ isLoggedIn, setCurrUser }) => {
               <Link to="login">Login</Link>
             </li>
           )}
-          <li>
-            <Link to="reservation">Active Reserves</Link>
-          </li>
+          {currUser && currUser.role === 2 && (
+            <li>
+              <Link to="reservation">Reserves</Link>
+            </li>
+          )}
         </ul>
       </nav>
       <Outlet />

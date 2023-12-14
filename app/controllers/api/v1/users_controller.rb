@@ -1,25 +1,25 @@
 # Api::V1::UsersController
 #
-# Este controlador maneja las solicitudes a la API relacionadas con los usuarios.
+# This controller handles API requests related to users.
 
 class Api::V1::UsersController < ApplicationController
-  # Antes de ejecutar ciertos métodos, se ejecutan los métodos set_user y authenticate_user.
+  # Before executing certain methods, the set_user and authenticate_user methods are run.
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
-  # index: Recopila todos los usuarios y los envía en la respuesta JSON.
+  # index: Collects all users and sends them in the JSON response.
   def index
     @users = User.all
     render json: @users
   end
 
-  # show: Envía el usuario especificado en la respuesta JSON.
+  # show: Sends the specified user in the JSON response.
   def show
     render json: @user
   end
 
-  # create: Crea un nuevo usuario. Si la creación es exitosa, envía el usuario en la respuesta JSON.
-  # Si no, envía los errores de validación en la respuesta JSON.
+  # create: Creates a new user. If the creation is successful, it sends the user in the JSON response.
+  # If not, it sends the validation errors in the JSON response.
   def create
     @user = User.new(user_params)
 
@@ -30,8 +30,13 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  # update: Actualiza un usuario existente. Si la actualización es exitosa, envía el usuario en la respuesta JSON.
-  # Si no, envía los errores de validación en la respuesta JSON.
+  # edit: Sends the specified user in the JSON response.
+  def edit
+    render json: @user   
+  end
+
+  # update: Updates an existing user. If the update is successful, it sends the user in the JSON response.
+  # If not, it sends the validation errors in the JSON response.
   def update
     if @user.update(user_params)
       render json: @user
@@ -40,7 +45,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  # destroy: Elimina un usuario existente y envía una respuesta HTTP sin contenido.
+  # destroy: Deletes an existing user and sends an HTTP response without content.
   def destroy
     @user.destroy
     head :no_content
@@ -48,8 +53,8 @@ class Api::V1::UsersController < ApplicationController
 
   private
 
-  # set_user: Encuentra el usuario especificado por params[:id] y lo asigna a @user.
-  # Si no se encuentra el usuario, envía un error en la respuesta JSON.
+  # set_user: Finds the user specified by params[:id] and assigns it to @user.
+  # If the user is not found, it sends an error in the JSON response.
   def set_user
     @user = User.find_by(id: params[:id])
     unless @user
@@ -57,8 +62,8 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  # user_params: Este método se encarga de manejar la seguridad de los parámetros del usuario.
-  # Requiere que los parámetros incluyan un :user y permite :name, :email, :password.
+  # user_params: This method handles the security of the user parameters.
+  # It requires the parameters to include a :user and allows :name, :email, :password.
   def user_params
     params.require(:user).permit(:name, :email, :password)
   end

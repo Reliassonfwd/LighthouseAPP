@@ -8,19 +8,19 @@
 /* Estilo del título principal del formulario de registro */
 .h1register {
   text-align: center;
-  color: #e64d00;
+  color: #e63a00;
   font-size: 400%;
 }
 
 /* Estilos para el enlace de inicio de sesión en el formulario de registro */
 .Sigin1 {
-  color: rgb(249, 249, 249);
+  color: rgb(0, 0, 0);
   text-align: center;
 }
 
 /* Estilos para el texto de inicio de sesión en el formulario de registro */
 .Sigin {
-  color: orangered;
+  color: #e66400;
 }
 
 /* Estilos para el botón de enviar en el formulario de registro */
@@ -34,12 +34,12 @@
   border-radius: 50px;
   font-weight: bold;
   font-size: 1rem;
-  background-color: #f85307;
+  background-color: #f86f07;
   transition: background-color 0.3s ease-in-out;
 }
 
 .register button:hover {
-  background-color: #e64d00;
+  background-color: rgb(7, 2, 49);
 }
 
 /* Estilos para los campos de entrada en el formulario de registro */
@@ -53,4 +53,5 @@
   font-size: 1rem;
   background-color: #f0f0f0;
   color: #333;
+  text-align: center;
 }

@@ -1,15 +1,14 @@
-# Api::V1::ApiController
+# # Api::V1::ApiController
 #
-# Este controlador hereda de ApplicationController y se encarga de manejar
-# las solicitudes a la API. Está configurado para responder con JSON.
+# This controller handles API requests to the root of the API.
 
 class Api::V1::ApiController < ApplicationController
 
-  # index
+  # Index action
   #
-  # Este método se encarga de manejar las solicitudes GET a la raíz de la API.
-  # Recopila todos los registros de varias tablas de la base de datos y los envía en la respuesta JSON.
-  # Las tablas incluyen: bookings, comments, companies, payment_methods, tours, y users.
+  # This method handles GET requests to the root of the API.
+  # It gathers all records from various database tables and sends them in the JSON response.
+  # The tables include: bookings, comments, companies, payments, tours, and users.
   
   def index
     render json: {

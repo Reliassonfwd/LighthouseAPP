@@ -1,11 +1,12 @@
 # Users::SessionsController
 #
-# Este controlador maneja las sesiones de los usuarios. Hereda de Devise::SessionsController.
+# This controller handles the sessions of users. It inherits from Devise::SessionsController.
 
 class Users::SessionsController < Devise::SessionsController
+  skip_before_action :verify_signed_out_user, only: :destroy
   respond_to :json
 
-  # respond_with: Genera un token JWT para el usuario que ha iniciado sesión y lo envía en la respuesta JSON.
+  # respond_with: Generates a JWT token for the user who has logged in and sends it in the JSON response.
   def respond_with(resource, _opts = {})
     token = resource.generate_jwt
     render json: {
@@ -17,17 +18,17 @@ class Users::SessionsController < Devise::SessionsController
     }, status: :ok
   end
 
-  # respond_to_on_destroy: Se llama cuando un usuario ha cerrado la sesión.
-  # Busca al usuario en la base de datos utilizando el token JWT de la solicitud.
-  # Si encuentra al usuario, envía una respuesta JSON con un mensaje de éxito.
-  # Si no encuentra al usuario, envía una respuesta JSON con un mensaje de error.
+  # respond_to_on_destroy: Called when a user has logged out.
+  # Searches for the user in the database using the JWT token from the request.
+  # If it finds the user, it sends a JSON response with a success message.
+  # If it does not find the user, it sends a JSON response with an error message.
   def respond_to_on_destroy
     if request.headers['Authorization'].present?
       begin
         jwt_payload = JWT.decode(request.headers['Authorization'].split(' ').last, Rails.application.credentials.devise_jwt_secret_key!).first
         current_user = User.find(jwt_payload['sub'])
       rescue JWT::ExpiredSignature
-        # Si el token ha expirado, puedes establecer current_user a nil, o manejarlo de la manera que prefieras
+        # If the token has expired, you can set current_user to nil, or handle it however you prefer
         current_user = nil
       end
     end

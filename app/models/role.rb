@@ -1,24 +1,26 @@
 # Role
 #
-# Este modelo representa un rol en la aplicación. 
-# Cada rol puede estar asociado a muchos usuarios y a un recurso polimórfico opcional.
-# El recurso polimórfico permite que un rol esté asociado a cualquier otro modelo en la aplicación.
+# This model represents a role in the application.
+# Each role can be associated with many users and an optional polymorphic resource.
+# The polymorphic resource allows a role to be associated with any other model in the application.
 
 class Role < ApplicationRecord
-  # Un rol tiene y pertenece a muchos usuarios. La relación se maneja a través de la tabla de unión users_roles.
+  # A role has and belongs to many users. The relationship is managed through the join table users_roles.
+  # This means that each role can be associated with multiple users.
   has_and_belongs_to_many :users, :join_table => :users_roles
   
-  # Un rol pertenece a un recurso, que puede ser de cualquier tipo. Esta asociación es opcional.
+  # A role belongs to a resource, which can be of any type. This association is optional.
+  # This means that each role can be associated with one resource of any type.
   belongs_to :resource,
              :polymorphic => true,
              :optional => true
   
-  # Se valida que el tipo de recurso esté incluido en la lista de tipos de recursos definidos por Rolify.
-  # Si el tipo de recurso es nulo, no se realiza la validación.
+  # It validates that the resource type is included in the list of resource types defined by Rolify.
+  # If the resource type is null, the validation is not performed.
   validates :resource_type,
             :inclusion => { :in => Rolify.resource_types, message: "is not included in the list" },
             :allow_nil => true
 
-  # scopify es un método proporcionado por Rolify que genera scopes dinámicos para los roles.
+  # scopify is a method provided by Rolify that generates dynamic scopes for roles.
   scopify
 end

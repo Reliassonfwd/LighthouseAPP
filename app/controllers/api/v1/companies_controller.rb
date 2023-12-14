@@ -1,32 +1,34 @@
 # Api::V1::CompaniesController
 #
-# Este controlador maneja las solicitudes a la API relacionadas con las compañías.
+# This controller handles API requests related to companies.
 
 class Api::V1::CompaniesController < ApplicationController
-  # Antes de ejecutar ciertos métodos, se ejecuta el método set_company.
+  # Before executing certain methods, the set_company method is executed.
   before_action :set_company, only: [:show, :edit, :update, :destroy]
 
-  # index: Recopila todas las compañías y las envía en la respuesta JSON.
+  # index: Gathers all companies and sends them in the JSON response.
   def index
     @companies = Company.all
     render json: @companies
   end
 
-  # show: Envía la compañía especificada en la respuesta JSON.
+  # show: Sends the specified company in the JSON response.
   def show
     render json: @company
   end
 
-  # new: Crea una nueva instancia de compañía.
+  # new: Creates a new instance of a company.
   def new
     @company = Company.new
   end
 
-  # edit: Método vacío, incluido por completitud.
-  def edit; end
+  # edit: Empty method, included for completeness.
+  def edit
+    render json: @company
+  end
 
-  # create: Crea una nueva compañía. Si la creación es exitosa, redirige al usuario a la compañía.
-  # Si no, vuelve a renderizar la vista de new.
+  # create: Creates a new company. If the creation is successful, it redirects the user to the company.
+  # If not, it re-renders the new view.
   def create
     @company = Company.new(company_params)
     if @company.save
@@ -36,8 +38,8 @@ class Api::V1::CompaniesController < ApplicationController
     end
   end
 
-  # update: Actualiza una compañía existente. Si la actualización es exitosa, redirige al usuario a la compañía.
-  # Si no, vuelve a renderizar la vista de edit.
+  # update: Updates an existing company. If the update is successful, it redirects the user to the company.
+  # If not, it re-renders the edit view.
   def update
     if @company.update(company_params)
       redirect_to @company, notice: 'Company was successfully updated.'
@@ -46,7 +48,7 @@ class Api::V1::CompaniesController < ApplicationController
     end
   end
 
-  # destroy: Elimina una compañía existente y redirige al usuario a la lista de compañías.
+  # destroy: Deletes an existing company and redirects the user to the list of companies.
   def destroy
     @company.destroy
     redirect_to companies_url, notice: 'Company was successfully destroyed.'
@@ -54,14 +56,14 @@ class Api::V1::CompaniesController < ApplicationController
 
   private
 
-  # set_company: Encuentra la compañía especificada por params[:id] y la asigna a @company.
+  # set_company: Finds the company specified by params[:id] and assigns it to @company.
   def set_company
     @company = Company.find(params[:id])
   end
 
-  # company_params: Este método se encarga de manejar la seguridad de los parámetros de la compañía.
-  # Requiere que los parámetros incluyan un :company y permite :name, :description, :location, :industry.
+  # company_params: This method handles the security of the company parameters.
+  # It requires the parameters to include a :company and allows :name, :description, :address, :contact_info.
   def company_params
-    params.require(:company).permit(:name, :description, :location, :industry)
+    params.require(:company).permit(:name, :description, :address, :contact_info)
   end
 end

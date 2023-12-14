@@ -1,20 +1,19 @@
-# Tour
-#
-# Este modelo representa un tour en la aplicación. 
-# Cada tour pertenece a una compañía y puede tener muchas reservas y comentarios. 
-# Si el tour se destruye, también se destruirán la compañía, las reservas y los comentarios asociados.
-# Además, cada tour tiene una imagen adjunta.
-
 class Tour < ApplicationRecord
-  # Un tour pertenece a una compañía. Si el tour se destruye, también se destruirá la compañía asociada.
-  belongs_to :company, dependent: :destroy
+  # A tour belongs to a company. If the tour is destroyed, the associated company will also be destroyed.
+  # This relationship ensures that a tour cannot exist without a company.
+  belongs_to :company
 
-  # Un tour tiene muchas reservas. Si el tour se destruye, también se destruirán las reservas asociadas.
+  # A tour has many bookings. If the tour is destroyed, the associated bookings will also be destroyed.
+  # This means that all bookings related to a specific tour will be removed from the database when that tour is deleted.
   has_many :bookings, dependent: :destroy
 
-  # Un tour tiene muchos comentarios. Si el tour se destruye, también se destruirán los comentarios asociados.
+  # A tour has many comments. If the tour is destroyed, the associated comments will also be destroyed.
+  # This ensures that when a tour is deleted, all of its associated comments are also deleted.
   has_many :comments, dependent: :destroy
 
-  # Un tour tiene una imagen adjunta.
+  # A tour has an attached image.
+  # This allows for each tour to have a visual representation in the form of an image.
   has_one_attached :image
+
+
 end

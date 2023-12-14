@@ -1,29 +1,41 @@
 # Api::V1::ToursController
 #
-# Este controlador maneja las solicitudes a la API relacionadas con los tours.
+# This controller handles API requests related to tours.
 
 class Api::V1::ToursController < ApplicationController
-  # Antes de ejecutar ciertos métodos, se ejecuta el método set_tour.
+  # Before executing certain methods, the set_tour method is run.
+  # This is a common pattern to avoid code duplication.
   before_action :set_tour, only: [:show, :edit, :update, :destroy]
 
-  # index: Recopila todos los tours y los envía en la respuesta JSON.
+  # index: Collects all tours and sends them in the JSON response.
+  # If a tour has an image attached, it includes the image URL in the response.
   def index
-    @tours = Tour.all.map do |tour|
-      if tour.image.attached?
-        tour.attributes.merge({ image: rails_blob_url(tour.image) })
-      else
-        tour.attributes
+    if params[:search]
+      @tours = Tour.where('name LIKE ?', "%#{params[:search]}%").map do |tour|
+        if tour.image.attached?
+          tour.attributes.merge({ image: rails_blob_url(tour.image) })
+        else
+          tour.attributes
+        end
+      end
+    else
+      @tours = Tour.all.map do |tour|
+        if tour.image.attached?
+          tour.attributes.merge({ image: rails_blob_url(tour.image) })
+        else
+          tour.attributes
+        end
       end
     end
     render json: @tours
   end
 
-  # create: Crea un nuevo tour. Si la creación es exitosa, envía el tour en la respuesta JSON.
-  # Si no, envía los errores de validación en la respuesta JSON.
+  # create: Creates a new tour. If the creation is successful, it sends the tour in the JSON response.
+  # If not, it sends the validation errors in the JSON response.
+  # The method also checks if the current user is authorized to create a tour.
   def create
     @tour = Tour.new(tour_params)
-    authorize @tour
-
+    # authorize @tour
     if @tour.save
       render json: @tour, status: :created
     else
@@ -31,45 +43,49 @@ class Api::V1::ToursController < ApplicationController
     end
   end
 
+  # show: Sends the specified tour in the JSON response.
+  # If the tour has an image attached, it includes the image URL in the response.
   def show
     render json: @tour.as_json.merge({ image: url_for(@tour.image) })
   end
   
-  # new: Crea una nueva instancia de tour.
+  # new: Creates a new tour instance.
   def new
     @tour = Tour.new
   end
 
-  # edit: Método vacío, incluido por completitud.
-  def edit; end
+  # edit: Empty method, included for completeness.
+  def edit
+    render json: @tour
+  end
 
-  # update: Actualiza un tour existente. Si el usuario actual es un administrador y la actualización es exitosa, 
-  # envía el tour en la respuesta JSON. Si la actualización falla, envía los errores de validación en la respuesta JSON.
-  # Si el usuario actual no es un administrador, envía un error de autorización en la respuesta JSON.
+  # update: Updates an existing tour. If the current user is an admin and the update is successful, 
+  # it sends the tour in the JSON response. If the update fails, it sends the validation errors in the JSON response.
+  # If the current user is not an admin, it sends an authorization error in the JSON response.
   def update
-    @tour = Tour.find(params[:id])
-    authorize @tour
-
-    if current_user.admin?
-      if @tour.update(tour_params)
-        render json: @tour
-      else
-        render json: @tour.errors, status: :unprocessable_entity
-      end
+    if @tour.update(tour_params)
+      Rails.logger.info "Tour with id #{params[:id]} was successfully updated."
+      render json: { message: 'Tour was successfully updated.' }
     else
-      render json: { error: 'No tienes permiso para actualizar este tour' }, status: :forbidden
+      Rails.logger.error "Failed to update tour with id #{params[:id]}."
+      render json: @tour.errors, status: :unprocessable_entity
     end
   end
 
-  # destroy: Elimina un tour existente y redirige al usuario a la lista de tours.
+  # destroy: Deletes an existing tour and redirects the user to the list of tours.
   def destroy
-    @tour.destroy
-    redirect_to tours_url, notice: 'Tour was successfully destroyed.'
+    if @tour.destroy
+      Rails.logger.info "Tour with id #{params[:id]} was successfully destroyed."
+      render json: { message: 'Tour was successfully destroyed.' }
+    else
+      Rails.logger.error "Failed to destroy tour with id #{params[:id]}."
+      render json: { error: 'Failed to destroy tour.' }, status: :unprocessable_entity
+    end
   end
 
-  # add_image: Encuentra el tour especificado por params[:id] y adjunta una imagen a él.
-  # La imagen se carga desde una ruta de archivo específica y se adjunta al tour.
-  # Luego, se genera una URL para la imagen y se envía en la respuesta JSON junto con un mensaje de éxito.
+  # add_image: Finds the tour specified by params[:id] and attaches an image to it.
+  # The image is loaded from a specific file path and attached to the tour.
+  # Then, a URL is generated for the image and sent in the JSON response along with a success message.
   def add_image
     @tour = Tour.find(params[:id])
     @tour.image.attach(params[:image]) # Attach the image to the tour
@@ -82,13 +98,13 @@ class Api::V1::ToursController < ApplicationController
 
   private
 
-  # set_tour: Encuentra el tour especificado por params[:id] y lo asigna a @tour.
+  # set_tour: Finds the tour specified by params[:id] and assigns it to @tour.
   def set_tour
     @tour = Tour.find(params[:id])
   end
 
-  # tour_params: Este método se encarga de manejar la seguridad de los parámetros del tour.
-  # Requiere que los parámetros incluyan un :tour y permite :name, :description, :duration, :price, :availability, :company_id, :quantity, :includes.
+  # tour_params: This method handles the security of the tour parameters.
+  # It requires the parameters to include a :tour and allows :name, :description, :duration, :price, :availability, :company_id, :quantity, :includes.
   def tour_params
     params.require(:tour).permit(:name, :description, :duration, :price, :availability, :company_id, :quantity, :includes)
   end

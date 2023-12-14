@@ -1,21 +1,10 @@
 /* Estilos generales de la cuadrícula de tarjetas */
 .imginfo {
   width: 100%;
-  height: 400px;
-
 }
 
-/* .imgintro {
+.imginfo1 {
   width: 100%;
-
-} */
-
-.imgcard {
-  margin-top: 20px;
-  width: 80%;
-  height: 30%;
-  border-radius: 5%;
-
 }
 
 .card-grid {
@@ -29,18 +18,22 @@
 
 /* Estilos generales de cada tarjeta */
 .card {
-  position: relative; /* Agregado para permitir la posición absoluta de los elementos hijos */
+  position: relative;
+  /* Agregado para permitir la posición absoluta de los elementos hijos */
   background-color: #f8f8f8;
   margin: 10px;
   overflow: hidden;
   width: calc(30% - 5px);
-  height: 485px; /* Ajusta esto a la altura que prefieras */
+  height: 485px;
+  /* Ajusta esto a la altura que prefieras */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   transition: transform 0.3s ease-in-out;
-  flex-direction: column; /* Agregado para alinear los elementos hijos verticalmente */
-  justify-content: space-around; /* Agregado para distribuir el espacio alrededor de los elementos hijos */
-  text-align: center; 
+  flex-direction: column;
+  /* Agregado para alinear los elementos hijos verticalmente */
+  justify-content: space-around;
+  /* Agregado para distribuir el espacio alrededor de los elementos hijos */
+  text-align: center;
 }
 
 .card:hover {
@@ -63,20 +56,34 @@ h1 {
   /* Eliminé el margen inferior para acercar el título al borde superior de la tarjeta */
 }
 
+h2 {
+  color: #f8f8f8;
+}
+
+
+
 /* Estilos para el enlace */
 a {
   text-decoration: none;
   color: inherit;
 }
 
+.imgcard {
+  margin-top: 20px;
+  width: 80%;
+  height: 30%;
+  border-radius: 5%;
+
+}
+
 /* Estilos para el título de la tarjeta */
 .card-title {
-  color: #333;
+  color: #ffffff;
   text-align: center;
   font-size: 1.2rem;
   /* Ajusté el tamaño del título */
   padding: 10px;
-  background-color: orangered;
+  background-color: rgb(255, 115, 0);
   /* Cambié el color de fondo a un tono de naranja más suave */
   border-radius: 0 0 15px 15px;
   /* Añadí bordes redondeados solo en la parte inferior */
@@ -98,11 +105,15 @@ a {
   padding: 10px 15px;
 }
 
-  .card-price {
-  position: absolute; /* El precio ahora está posicionado absolutamente */
-  bottom: 60px; /* Ajusta esto para cambiar la distancia del precio desde la parte inferior de la tarjeta */
-  width: 100%; /* Asegura que el precio se extienda a lo ancho de la tarjeta */
-  text-align: center; /* Asegura que el precio esté centrado */
+.card-price {
+  position: absolute;
+  /* El precio ahora está posicionado absolutamente */
+  bottom: 60px;
+  /* Ajusta esto para cambiar la distancia del precio desde la parte inferior de la tarjeta */
+  width: 100%;
+  /* Asegura que el precio se extienda a lo ancho de la tarjeta */
+  text-align: center;
+  /* Asegura que el precio esté centrado */
   font-weight: bold;
 }
 
@@ -115,9 +126,12 @@ a {
 
 /* Estilos para el botón de reserva */
 .reserva {
-  position: absolute; /* El botón ahora está posicionado absolutamente */
-  bottom: 10px; /* Ajusta esto para cambiar la distancia del botón desde la parte inferior de la tarjeta */
-  left: 50%; /* Centra el botón horizontalmente */
+  position: absolute;
+  /* El botón ahora está posicionado absolutamente */
+  bottom: 10px;
+  /* Ajusta esto para cambiar la distancia del botón desde la parte inferior de la tarjeta */
+  left: 50%;
+  /* Centra el botón horizontalmente */
   transform: translateX(-50%);
   border-radius: 5px;
   text-transform: uppercase;
@@ -142,17 +156,13 @@ a {
   border-radius: 50px;
   font-weight: bold;
   font-size: 1rem;
-  background-color: #f85307;
+  background-color: rgb(230, 87, 5);
   transition: background-color 0.3s ease-in-out;
 }
 
 .pagination:hover {
-  background-color: #6d2501;
+  background-color: rgb(164, 64, 5);
 }
-
-
-
-
 
 .spinner {
   display: grid;
@@ -162,8 +172,8 @@ a {
   border-radius: 50%;
   background: conic-gradient(from 180deg at 50% 50%,
       rgba(82, 0, 255, 0) 0deg,
-      #ff5900 360deg);
-  animation: spin 0.4s infinite linear;
+      #e87000 360deg);
+  animation: spin 1s infinite linear;
 }
 
 .spinner::before {
