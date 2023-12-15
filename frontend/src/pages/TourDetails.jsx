@@ -60,6 +60,7 @@ const TourDetails = () => {
       name: tour.name,
       price: tour.price,
       includes: tour.includes,
+      Image: tour.image,
       // Add other tour details as needed
     });
   };
@@ -67,12 +68,22 @@ const TourDetails = () => {
   // Rendered JSX for the TourDetails component
   return (
     <div>
+      <br />
+      <br />
       {/* Display tour details */}
+      <center><img
+        className="imgcarddetails"
+        src={tour && tour.image}
+        alt=""
+      /></center>
       <h1 className="h1div">{tour && tour.name}</h1>
       <p className="pdiv">{tour && tour.description}</p>
       <p className="pdiv">{tour && `Price: $${tour.price}`}</p>
       <p className="pdiv">{tour && tour.duration}</p>
       <p className="pdiv">{tour && `Includes: ${tour.includes}`}</p>
+
+
+
       <br />
       <br />
 

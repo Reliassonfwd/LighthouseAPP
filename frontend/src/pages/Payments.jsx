@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Modal from "../components/Modal";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import "../styles/Payments.css";
@@ -17,16 +17,16 @@ const Payments = () => {
   const { Id } = useParams();
 
   // Function to fetch tour information based on the ID
-  const llamadoTours = async () => {
+  const llamadoTours = useCallback(async () => {
     const url = `http://localhost:3001/api/v1/tours/${Id}`;
     const response = await fetch(url);
     const data = await response.json();
     setTourInfo(data);
-  };
+  }, [Id]);
 
   useEffect(() => {
     llamadoTours();
-  }, [Id]);
+  }, [llamadoTours]);
 
   // State for modal visibility, payment details, and tour information
   const [modalVisible, setModalVisible] = useState(false);

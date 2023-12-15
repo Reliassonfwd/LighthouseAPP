@@ -1,6 +1,7 @@
 /* Estilos generales de la cuadrícula de tarjetas */
 .imginfo {
   width: 100%;
+  height: 380px;
 }
 
 .imginfo1 {
@@ -20,25 +21,26 @@
 .card {
   position: relative;
   /* Agregado para permitir la posición absoluta de los elementos hijos */
-  background-color: #f8f8f8;
-  margin: 10px;
+  background-color: #80808017;
+
   overflow: hidden;
-  width: calc(30% - 5px);
-  height: 485px;
+  width: calc(25% - 5px);
+  height: 350px;
   /* Ajusta esto a la altura que prefieras */
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
   transition: transform 0.3s ease-in-out;
   flex-direction: column;
   /* Agregado para alinear los elementos hijos verticalmente */
-  justify-content: space-around;
+  /* justify-content: space-around; */
   /* Agregado para distribuir el espacio alrededor de los elementos hijos */
   text-align: center;
+
 }
 
 .card:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 20px rgb(255, 102, 0);
+  box-shadow: 0 0 20px rgba(255, 102, 0, 0.125);
   transition: 0.3s;
   /* Efecto de escala al pasar el ratón para resaltar */
 }
@@ -71,7 +73,7 @@ a {
 .imgcard {
   margin-top: 20px;
   width: 80%;
-  height: 30%;
+  height: 40%;
   border-radius: 5%;
 
 }
@@ -80,7 +82,7 @@ a {
 .card-title {
   color: #ffffff;
   text-align: center;
-  font-size: 1.2rem;
+  font-size: 95%;
   /* Ajusté el tamaño del título */
   padding: 10px;
   background-color: rgb(255, 115, 0);
@@ -141,10 +143,11 @@ a {
   background-color: #f85307;
   padding: 14px 28px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .reserva:hover {
-  background-color: #048b31;
+  background-color: #8b3304;
 }
 
 .pagination {

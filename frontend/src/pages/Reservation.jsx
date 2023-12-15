@@ -104,7 +104,7 @@ const Reservation = () => {
             <span className="close-button" onClick={() => setShowModal(false)}>
               &times;
             </span>
-            <p>Notification deleted</p>
+            <p>Reserve deleted</p>
           </div>
         </div>
       )}

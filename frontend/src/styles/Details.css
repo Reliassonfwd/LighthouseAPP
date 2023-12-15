@@ -19,7 +19,7 @@
 }
 
 .pdiv {
-  color: #666;
+  color: #c6c5c5;
   font-size: 1.2em;
   margin-bottom: 10px;
   text-align: center;
@@ -41,4 +41,10 @@
 .adiv:hover {
   background-color: #0cfb44;
   color: #fff;
+}
+
+
+.imgcarddetails {
+  width: 30%;
+  border-radius: 15px;
 }

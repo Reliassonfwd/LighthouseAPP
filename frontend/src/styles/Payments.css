@@ -3,7 +3,7 @@ h1 {
 }
 
 form {
-  color: rgb(35, 13, 1);
+  color: rgba(255, 255, 255, 0.634);
   text-align: center;
 }
 
@@ -15,8 +15,8 @@ input {
   border-radius: 10px;
   padding: 10px;
   font-size: 1rem;
-  background-color: #f0f0f0;
-  color: #333;
+  background-color: #f0f0f026;
+  color: #ffffff;
 }
 
 button {
@@ -43,7 +43,7 @@ button:hover {
 } 
 
 .pinfo{
-  color: #4c4c4c;
+  color: #ffffffb3;
 font-size: x-large;
 font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; 
 }
