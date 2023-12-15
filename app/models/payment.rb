@@ -15,9 +15,8 @@ class Payment < ApplicationRecord
   private 
 
   def encode_sensitive_data
-    # The card number and cvv are encoded using Base64 encoding before saving.
-    self.card_number = Base64.strict_encode64(card_number.to_s)
-    self.cvv = Base64.strict_encode64(cvv.to_s)
+    self.card_number = Base64.strict_encode64(card_number)
+    self.cvv = Base64.strict_encode64(cvv)
   end
 
   def decode_sensitive_data

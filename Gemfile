@@ -72,6 +72,8 @@ group :development, :test do
   
   gem 'pundit-matchers', '~> 3.1', '>= 3.1.2'
 
+  gem 'shoulda-matchers'
+
 
 end
 

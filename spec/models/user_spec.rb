@@ -2,8 +2,8 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  # it { should have_many(:bookings) }
-  # it { should have_many(:comments) }
+  it { should have_many(:bookings) }
+  it { should have_many(:comments) }
 
   it "includes Devise modules" do
     expect(User.ancestors.include?(Devise::JWT::RevocationStrategies::JTIMatcher)).to eq(true)
@@ -27,4 +27,18 @@ RSpec.describe User, type: :model do
     user = FactoryBot.build(:user, password: nil)
     expect(user).to_not be_valid
   end
+
+  it "returns true if the user has the role of admin" do
+    user = FactoryBot.create(:user)
+    user.add_role :admin
+
+    expect(user.admin?).to be true
+  end
+
+  it "returns false if the user does not have the role of admin" do
+    user = FactoryBot.create(:user)
+
+    expect(user.admin?).to be false
+  end
+  
 end
