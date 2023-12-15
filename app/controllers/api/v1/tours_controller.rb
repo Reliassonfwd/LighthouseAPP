@@ -35,14 +35,13 @@ class Api::V1::ToursController < ApplicationController
   # The method also checks if the current user is authorized to create a tour.
   def create
     @tour = Tour.new(tour_params)
-    # authorize @tour
     if @tour.save
-      render json: @tour, status: :created
+      render json: @tour.as_json.merge({ image: url_for(@tour.image) }), status: :created
     else
-      render json: @tour.errors, status: :unprocessable_entity
+      render json: { error: 'Failed to create tour' }, status: :unprocessable_entity
     end
   end
-
+  
   # show: Sends the specified tour in the JSON response.
   # If the tour has an image attached, it includes the image URL in the response.
   def show
@@ -61,14 +60,14 @@ class Api::V1::ToursController < ApplicationController
 
   # update: Updates an existing tour. If the current user is an admin and the update is successful, 
   # it sends the tour in the JSON response. If the update fails, it sends the validation errors in the JSON response.
-  # If the current user is not an admin, it sends an authorization error in the JSON response.
-  def update
+  # If the current user is not an admin, it sends an authorization error in the JSON response
+      def update
     if @tour.update(tour_params)
       Rails.logger.info "Tour with id #{params[:id]} was successfully updated."
       render json: { message: 'Tour was successfully updated.' }
     else
       Rails.logger.error "Failed to update tour with id #{params[:id]}."
-      render json: @tour.errors, status: :unprocessable_entity
+      render json: { error: 'Failed to update tour' }, status: :unprocessable_entity
     end
   end
 
@@ -88,11 +87,11 @@ class Api::V1::ToursController < ApplicationController
   # Then, a URL is generated for the image and sent in the JSON response along with a success message.
   def add_image
     @tour = Tour.find(params[:id])
-    @tour.image.attach(params[:image]) # Attach the image to the tour
-      if @tour.save
-        render json: { message: 'Image was successfully attached.' }
-      else
-        render json: @tour.errors, status: :unprocessable_entity
+    @tour.image.attach(params[:image])
+    if @tour.save
+      render json: { message: 'Image was successfully attached.' }
+    else
+      render json: { error: 'Failed to add image' }, status: :unprocessable_entity
     end
   end
 

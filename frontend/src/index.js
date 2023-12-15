@@ -5,7 +5,10 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
+// Create a React root for rendering
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+// Render the main App component inside a BrowserRouter
 root.render(
   <React.StrictMode>
     <BrowserRouter>

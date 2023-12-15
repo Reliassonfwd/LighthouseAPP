@@ -1,8 +1,10 @@
 import React from "react";
 
 const PaymentForm = ({ handleInputChange, handlePayment, paymentDetails }) => {
+  // Render:
   return (
     <form onSubmit={handlePayment}>
+      {/* Card Number */}
       <label>
         Card Number:
         <br />
@@ -14,12 +16,16 @@ const PaymentForm = ({ handleInputChange, handlePayment, paymentDetails }) => {
         />
       </label>
       <br />
+
+      {/* Expiry Date */}
       <label>
         Expiry Date:
         <br />
         <input type="date" name="expiryDate" onChange={handleInputChange} />
       </label>
       <br />
+
+      {/* CVV */}
       <label>
         CVV:
         <br />
@@ -31,6 +37,8 @@ const PaymentForm = ({ handleInputChange, handlePayment, paymentDetails }) => {
         />
       </label>
       <br />
+
+      {/* Card Holder Name */}
       <label>
         Card Holder Name:
         <br />
@@ -42,6 +50,8 @@ const PaymentForm = ({ handleInputChange, handlePayment, paymentDetails }) => {
         />
       </label>
       <br />
+
+      {/* Full Name */}
       <label>
         Full Name:
         <br />
@@ -53,6 +63,8 @@ const PaymentForm = ({ handleInputChange, handlePayment, paymentDetails }) => {
         />
       </label>
       <br />
+
+      {/* Contact Number */}
       <label>
         Contact Number:
         <br />
@@ -64,6 +76,8 @@ const PaymentForm = ({ handleInputChange, handlePayment, paymentDetails }) => {
         />
       </label>
       <br />
+
+      {/* E-mail */}
       <label>
         E-mail:
         <br />
@@ -75,6 +89,8 @@ const PaymentForm = ({ handleInputChange, handlePayment, paymentDetails }) => {
         />
       </label>
       <br />
+
+      {/* Number Of People */}
       <label>
         Number Of People:
         <br />
@@ -87,15 +103,21 @@ const PaymentForm = ({ handleInputChange, handlePayment, paymentDetails }) => {
         />
       </label>
       <br />
+
+      {/* Booking Date */}
       <label>
         Booking Date:
         <br />
         <input type="date" name="bookingDate" onChange={handleInputChange} />
       </label>
       <br />
+
+      {/* Pay button */}
       <button type="submit">Pay</button>
     </form>
   );
 };
 
+// Export:
+// - Exports the PaymentForm component as the default export.
 export default PaymentForm;

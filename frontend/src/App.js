@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Tour from "./pages/Tour";
@@ -7,17 +7,15 @@ import Reservation from "./pages/Reservation";
 import User from "./components/User";
 import TourDetails from "./pages/TourDetails";
 import "../src/App.css";
-import { useState, useEffect } from "react";
 import { jwtDecode } from 'jwt-decode';
 import Login from './pages/Login';
 import Footercomp from "./components/footer";
 import WhatsAppButton from './components/WhatsAppButton';
 
-
 function App() {
+  // State variables for managing current user and login status
   const [currUser, setCurrUser] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
-
 
   async function fetchUserRoles(token, userId) {
     const response = await fetch('http://localhost:3001/api/v1/users_roles', {
@@ -33,7 +31,6 @@ function App() {
 
     const data = await response.json();
 
-
     const userRole = data.find(item => item.user_id === Number(userId));
 
     if (!userRole || !userRole.role_id) {
@@ -45,6 +42,9 @@ function App() {
     return userRole.role_id;
   }
 
+  /**
+   * useEffect hook to fetch user details and roles when the component mounts.
+   */
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -54,6 +54,7 @@ function App() {
 
         console.log('currUser:', decodedToken);
 
+        // Fetch user roles and update the currUser state
         fetchUserRoles(token, decodedToken.sub).then(roleId => {
           setCurrUser({ ...decodedToken, role: roleId });
         });
@@ -64,10 +65,13 @@ function App() {
     }
   }, []);
 
-
+  // Rendered JSX for the App component
   return (
     <>
+      {/* WhatsApp button component */}
       <WhatsAppButton />
+
+      {/* React Router configuration for different routes */}
       <Routes>
         <Route
           path="/"
@@ -84,6 +88,7 @@ function App() {
         </Route>
       </Routes>
 
+      {/* Footer component */}
       <div>
         <Footercomp></Footercomp>
       </div>

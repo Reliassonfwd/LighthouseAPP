@@ -7,21 +7,28 @@ import autoTable from "jspdf-autotable";
 import { paymentDetailsSchema } from "../components/paymentSchema";
 import PaymentForm from "../components/PaymentForm";
 
+// Payments Component
+//
+// A React component for handling payments. Allows users to input payment details
+// and generates an invoice PDF upon successful payment.
 const Payments = () => {
+  // Retrieve location and tour ID from the route parameters
   const location = useLocation();
-
   const { Id } = useParams();
 
+  // Function to fetch tour information based on the ID
   const llamadoTours = async () => {
     const url = `http://localhost:3001/api/v1/tours/${Id}`;
     const response = await fetch(url);
     const data = await response.json();
     setTourInfo(data);
   };
+
   useEffect(() => {
     llamadoTours();
   }, [Id]);
 
+  // State for modal visibility, payment details, and tour information
   const [modalVisible, setModalVisible] = useState(false);
   const [paymentDetails, setPaymentDetails] = useState({
     cardNumber: "",
@@ -35,9 +42,13 @@ const Payments = () => {
   });
   const [tourInfo, setTourInfo] = useState([]);
 
+  // Retrieve selected tour information from the location state
   const selectedTour = location.state && location.state.selectedTour;
+
+  // Hook for navigation
   const navigate = useNavigate();
 
+  // Function to handle input changes in the payment form
   const handleInputChange = (event) => {
     setPaymentDetails({
       ...paymentDetails,
@@ -45,11 +56,14 @@ const Payments = () => {
     });
   };
 
+  // State for tracking payment ID
   const [paymentId, setPaymentId] = useState(1);
 
+  // Function to handle payment submission
   const handlePayment = async (event) => {
     event.preventDefault();
 
+    // Validate payment details using the paymentDetailsSchema schema
     try {
       await paymentDetailsSchema.validate(paymentDetails);
     } catch (error) {
@@ -57,11 +71,14 @@ const Payments = () => {
       return;
     }
 
+    // Generate invoice PDF and show modal
     generateInvoicePDF();
     setModalVisible(true);
 
+    // Increment payment ID
     setPaymentId(paymentId + 1);
 
+    // Post payment details to the server
     const url = `http://localhost:3001/api/v1/payments`;
     const paymentData = {
       payment_type: "Credit Card",
@@ -85,14 +102,14 @@ const Payments = () => {
       if (!response.ok) {
         throw data.error;
       }
-      console.log(data);
 
+      // Post booking details to the server
       const bookingUrl = `http://localhost:3001/api/v1/bookings`;
       const bookingData = {
         user_id: localStorage.getItem("userId"),
-        tour_id: Id, // Asegúrate de que este es el id correcto del tour
-        payment_id: data.id, // Aquí es donde usas el id del pago que acabas de hacer
-        booking_date: paymentDetails.bookingDate, // Asegúrate de que este es el nombre correcto del campo de la fecha de reserva
+        tour_id: Id,
+        payment_id: data.id,
+        booking_date: paymentDetails.bookingDate,
       };
       const bookingResponse = await fetch(bookingUrl, {
         method: "POST",
@@ -107,38 +124,38 @@ const Payments = () => {
       if (!bookingResponse.ok) {
         throw bookingDataResponse.error;
       }
-      console.log(bookingDataResponse);
     } catch (error) {
       console.log("error", error);
     }
   };
 
+  // Function to close the modal
   const closeModal = () => {
     console.log("Closing modal...");
     setModalVisible(false);
 
-    // Redirige a la página de tours u otra página después del pago exitoso
+    // Redirect to the reservation page or another page after successful payment
     navigate("/reservation");
   };
 
+  // Function to generate an invoice PDF
   const generateInvoicePDF = () => {
     console.log("Generating invoice PDF...");
     const doc = new jsPDF();
 
-    // Encabezado de la factura
+    // Invoice header
     doc.setFontSize(18);
-    doc.text("Reserve With Köla", 14, 22);
+    doc.text("Reserve With Lighthouse", 14, 22);
     doc.setFontSize(11);
-    doc.text(`Nombre: ${paymentDetails.fullName}`, 14, 30);
-    doc.text(`Cantidad de personas: ${paymentDetails.numberOfPeople}`, 14, 40);
-    // doc.text(`ID de pago: ${paymentId}`, 14, 50);
+    doc.text(`Name: ${paymentDetails.fullName}`, 14, 30);
+    doc.text(`Number of People: ${paymentDetails.numberOfPeople}`, 14, 40);
 
-    // Información del tour
+    // Tour information
     if (tourInfo) {
       doc.text(`Tour: ${tourInfo.name}`, 14, 50);
-      doc.text(`Precio por persona: $${tourInfo.price}`, 14, 60);
+      doc.text(`Price per Person: $${tourInfo.price}`, 14, 60);
 
-      // Agregar detalles de la tabla con los datos del tour
+      // Add table details with tour data
       const tourTableData = [
         [
           tourInfo.name,
@@ -151,30 +168,25 @@ const Payments = () => {
       autoTable(doc, {
         startY: 70,
         head: [
-          [
-            "Tour",
-            "Precio por persona",
-            "Cantidad de personas",
-            "Precio total $",
-          ],
+          ["Tour", "Price per Person", "Number of People", "Total Price $"],
         ],
         body: tourTableData,
       });
     }
 
-    doc.save("factura.pdf");
+    doc.save("invoice.pdf");
   };
 
   return (
     <div>
-      {/* Mostrar información del tour en el formulario */}
+      {/* Display tour information in the form */}
       {tourInfo && (
         <div className="Tourinfo">
           <h1>Tour Information</h1>
-          <p className="pinfo">Tour name: {tourInfo.name}</p>
-          <p className="pinfo">Price per person: ${tourInfo.price}</p>
+          <p className="pinfo">Tour Name: {tourInfo.name}</p>
+          <p className="pinfo">Price per Person: ${tourInfo.price}</p>
           <br />
-          {/* Agrega más detalles según sea necesario */}
+          {/* Add more details as needed */}
         </div>
       )}
       <h1>PAYMENT</h1>
@@ -189,6 +201,7 @@ const Payments = () => {
         <br />
       </div>
 
+      {/* Display modal upon successful payment */}
       {modalVisible && (
         <Modal onClose={closeModal} paymentSuccess={true}>
           <h2>Payment Successful!</h2>
@@ -202,4 +215,6 @@ const Payments = () => {
   );
 };
 
+// Export:
+// - Exports the Payments component for usage in the application.
 export default Payments;

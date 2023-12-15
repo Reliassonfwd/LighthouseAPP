@@ -6,11 +6,14 @@ import { Link } from "react-router-dom";
 import infoimg from "../images/infoimg.jpg";
 import IMGINTRO from "../images/IMGINTRO.jpg";
 import portada1 from "../images/portada1.jpg";
-import ImageUpload from "../components/formimage"
+import ImageUpload from "../components/formimage";
 
-
+// Component that manages tours
 const Tour = ({ currUser }) => {
+  // Form management using react-hook-form
   const { register, handleSubmit, reset } = useForm();
+
+  // State variables
   const [currentPage, setCurrentPage] = useState(1);
   const [cards, setCards] = useState([]);
   const [currentCards, setCurrentCards] = useState([]);
@@ -24,7 +27,7 @@ const Tour = ({ currUser }) => {
   const [tourPrice, setTourPrice] = useState('');
   const [tourIncludes, setTourIncludes] = useState('');
 
-
+  // Handles form submission to create a new tour.
   const onSubmit = (data) => {
     const token = localStorage.getItem('token');
     reset();
@@ -44,13 +47,14 @@ const Tour = ({ currUser }) => {
         setCurrentCards([...currentCards, response.data]);
       })
       .catch(error => {
-        console.error("Hubo un error al crear el tour:", error);
+        console.error("There was an error creating the tour:", error);
         if (error.response) {
           console.error('Server response:', error.response.data);
         }
       });
   };
 
+  // Handles the selection of a tour for editing.
   const handleTourChange = (event) => {
     const tourId = event.target.value;
     const tour = currentCards.find(tour => tour.id.toString() === tourId);
@@ -63,7 +67,9 @@ const Tour = ({ currUser }) => {
     } else {
       console.error(`No tour found with ID ${tourId}`);
     }
-  }
+  };
+
+  // Handles form submission to edit an existing tour.
   const handleEditSubmit = (event) => {
     event.preventDefault();
     const updatedTour = {
@@ -79,9 +85,9 @@ const Tour = ({ currUser }) => {
     setTourPrice('');
     setTourIncludes([]);
     window.location.reload();
-  }
+  };
 
-
+  // Edits an existing tour.
   const editTour = (id, updatedTour) => {
     axios.put(`http://localhost:3001/api/v1/tours/${id}`, updatedTour)
       .then(response => {
@@ -92,10 +98,9 @@ const Tour = ({ currUser }) => {
       .catch(error => {
         console.error('Error updating tour:', error);
       });
-  }
+  };
 
-
-
+  // Fetches the list of tours and companies on component mount.
   useEffect(() => {
     setIsLoading(true);
     axios
@@ -106,10 +111,9 @@ const Tour = ({ currUser }) => {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.error("Hubo un error al obtener los datos:", error);
+        console.error("There was an error fetching data:", error);
         setIsLoading(false);
       });
-
 
     axios
       .get("http://localhost:3001/api/v1/companies")
@@ -117,16 +121,15 @@ const Tour = ({ currUser }) => {
         setCompanies(response.data);
       })
       .catch((error) => {
-        console.error("Hubo un error al obtener las compañías:", error);
+        console.error("There was an error fetching companies:", error);
       });
   }, []);
 
-
-
+  // Deletes a tour.
   const deleteTour = async (id) => {
     const token = localStorage.getItem('token');
 
-    if (window.confirm("¿Estás seguro de eliminar este tour?")) {
+    if (window.confirm("Are you sure you want to delete this tour?")) {
       try {
         await axios.delete(`http://localhost:3001/api/v1/tours/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
@@ -135,7 +138,7 @@ const Tour = ({ currUser }) => {
         setCards(cards.filter((card) => card.id !== id));
         setCurrentCards(currentCards.filter((card) => card.id !== id));
       } catch (error) {
-        console.error("Hubo un error al eliminar el tour:", error);
+        console.error("There was an error deleting the tour:", error);
         if (error.response) {
           console.error('Server response:', error.response.data);
         }
@@ -143,178 +146,180 @@ const Tour = ({ currUser }) => {
     }
   };
 
-
-
-  if (isLoading) {
-    return (
-      <body>
-        <center>
-          <div className="spinner"></div>
-        </center>
-      </body>
-    );
-  };
-
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    const indexOfLastCard = pageNumber * cardsPerPage;
-    const indexOfFirstCard = indexOfLastCard - cardsPerPage;
-    setCurrentCards(cards.slice(indexOfFirstCard, indexOfLastCard));
-  };
-
-
+// Loading spinner while data is being fetched
+if (isLoading) {
   return (
-    <>
+    <body>
+      <center>
+        <div className="spinner"></div>
+      </center>
+    </body>
+  );
+};
 
+// Paginate function to handle pagination logic
+const paginate = (pageNumber) => {
+  setCurrentPage(pageNumber);
+  const indexOfLastCard = pageNumber * cardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - cardsPerPage;
+  setCurrentCards(cards.slice(indexOfFirstCard, indexOfLastCard));
+};
+
+// Rendered JSX for the Tour component
+return (
+  <>
+    {/* Conditional rendering for admin users to edit tours */}
+    {currUser && currUser.role === 1 && (
+      <form onSubmit={handleEditSubmit}>
+        <br />
+        <h1> FORMS SECTION </h1>
+        <h2>-----EDIT TOUR-----</h2>
+
+        <br />
+        <br />
+        {/* Input fields for editing tour details */}
+        <input type="text" value={tourName} onChange={e => setTourName(e.target.value)} />
+        <input type="text" value={tourDescription} onChange={e => setTourDescription(e.target.value)} />
+        <input type="number" value={tourPrice} onChange={e => setTourPrice(e.target.value)} />
+        <input type="text" value={tourIncludes} onChange={e => setTourIncludes(e.target.value)} />
+        <br />
+        <br />
+        {/* Dropdown for selecting the tour to edit */}
+        <select onChange={handleTourChange}>
+          {currentCards.map(tour => (
+            <option key={tour.id} value={tour.id}>{tour.name}</option>
+          ))}
+        </select>
+        <br />
+        <br />
+        {/* Submit button to edit the selected tour */}
+        <button type="submit">Edit Tour</button>
+      </form>
+    )}
+    <br />
+    <br />
+
+    {/* Form for creating a new tour, visible to admin users */}
+    <div className="App">
       {currUser && currUser.role === 1 && (
-
-        <form onSubmit={handleEditSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <h2>-----CREATE TOUR-----</h2>
+          {/* Input fields for creating a new tour */}
+          <input {...register("name")} placeholder="Tour name" />
+          <input {...register("description")} placeholder="Description" />
+          <input {...register("price")} placeholder="Price" />
+          <input {...register("duration")} placeholder="Tour duration" />
+          <input {...register("availability")} placeholder="Availability" />
+          <input {...register("quantity")} placeholder="Passengers" />
+          <input {...register("includes")} placeholder="Includes" />
           <br />
-          <h1> FORMS SECTION </h1>
-          <h2>-----EDIT TOUR-----</h2>
-
-          <br />
-          <br />
-          <input type="text" value={tourName} onChange={e => setTourName(e.target.value)} />
-          <input type="text" value={tourDescription} onChange={e => setTourDescription(e.target.value)} />
-          <input type="number" value={tourPrice} onChange={e => setTourPrice(e.target.value)} />
-          <input type="text" value={tourIncludes} onChange={e => setTourIncludes(e.target.value)} />
-          <br />
-          <br />
-          <select onChange={handleTourChange}>
-            {currentCards.map(tour => (
-              <option key={tour.id} value={tour.id}>{tour.name}</option>
+          {/* Dropdown for selecting the company of the new tour */}
+          <select {...register("company_id")}>
+            {companies.map((company) => (
+              <option key={company.id} value={company.id}>{company.name}</option>
             ))}
           </select>
+
           <br />
           <br />
-          <button type="submit">Editar Tour</button>
+
+          {/* Submit button to create the new tour */}
+          <button type="submit">Create tour</button>
+
+          <br />
+          <br />
+          <br />
+          <h2>-----UPLOAD IMAGE-----</h2>
+          {/* Component for uploading an image */}
+          <ImageUpload />
         </form>
       )}
-      <br />
-      <br />
+    </div>
 
-      <div className="App">
-        {currUser && currUser.role === 1 && (
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <h2>-----CREATE TOUR-----</h2>
-            <input {...register("name")} placeholder="Name tour" />
-            <input {...register("description")} placeholder="Description tour" />
-            <input {...register("price")} placeholder="Price tour" />
-            <input {...register("duration")} placeholder="Duracition tour" />
-            <input {...register("availability")} placeholder="Available tour" />
-            <input {...register("quantity")} placeholder="amounts tours" />
-            <input {...register("includes")} placeholder="includes" />
-            <br />
-            <select {...register("company_id")}>
-              {companies.map((company) => (
-                <option value={company.id}>{company.name}</option>
-              ))}
-            </select>
+    <br />
+    <br />
+    <br />
 
-            <br />
-            <br />
+    {/* Images displayed for non-admin users or users with role 2 */}
+    {(!currUser || (currUser && currUser.role === 2)) && (
+      <div>
+        <img className="imginfo" src={portada1} alt="" />
+        <img className="imginfo" src={infoimg} alt="" />
+        <img className="imginfo1" src={IMGINTRO} alt="" />
+      </div>
+    )}
 
-            <button type="submit">Create tour</button>
+    <div className="App">
+      {/* Displaying tour cards */}
+      <div className="card-grid">
+        {currentCards.map((card) => (
+          <div className="card" data-id={card.id} key={card.id}>
+            <h2 className="card-title">{card.name}</h2>
 
-            <br />
-            <br />
-            <br />
-            <h2>-----UPLOAD IMAGE-----</h2>
-            <ImageUpload />
-          </form>
-        )}
+            {imageLoading && <center>
+              <div className="spinner2"></div>
+            </center>}
+
+            {/* Image for the tour */}
+            <img
+              className="imgcard"
+              src={card.image}
+              alt={card.name}
+              onLoad={() => setImageLoading(false)} />
+
+            <p className="card-duration">{card.duration}</p>
+            <p className="card-incudes">{`includes: ${card.includes}`}</p>
+
+            {/* Reservation link for non-admin users */}
+            {(!currUser || (currUser && currUser.role === 2)) && (
+              <Link className="reserva"
+                to={{
+                  pathname: `/tour-details/${card.id}`,
+                  state: { tourId: card.id },
+                }}
+              >
+                Reserve
+              </Link>
+            )}
+
+            {/* Delete button for admin users */}
+            {currUser && currUser.role === 1 && (
+              <button onClick={() => deleteTour(card.id)}>Delete</button>
+            )}
+          </div>
+        ))}
       </div>
 
       <br />
       <br />
       <br />
 
-      {(!currUser || (currUser && currUser.role === 2)) && (
-        <div>
-
-          <img className="imginfo" src={portada1} alt="" />
-          <img className="imginfo" src={infoimg} alt="" />
-          <img className="imginfo1" src={IMGINTRO} alt="" />
-
-        </div>
-      )}
-
-
-      <div className="App">
-        <div className="card-grid">
-          {currentCards.map((card) => (
-            <div className="card" data-id={card.id} key={card.id}>
-              <h2 className="card-title">{card.name}</h2>
-
-              {imageLoading && <center>
-                <div className="spinner2"></div>
-              </center>}
-
-
-              <img
-                className="imgcard"
-                src={card.image}
-                alt={card.name}
-                onLoad={() => setImageLoading(false)} />
-
-              <p className="card-duration">{card.duration}</p>
-              <p className="card-incudes">{`includes: ${card.includes}`}</p>
-
-
-              {(!currUser || (currUser && currUser.role === 2)) && (
-                <Link className="reserva"
-                  to={{
-                    pathname: `/tour-details/${card.id}`,
-                    state: { tourId: card.id },
-                  }}
-                >
-                  Reservar
-                </Link>
-              )}
-
-
-              {currUser && currUser.role === 1 && (
-                <button onClick={() => deleteTour(card.id)}>Delete</button>
-              )}
-
-            </div>
-          ))}
-
-        </div>
+      {/* Pagination buttons */}
+      <div>
+        <button
+          className="pagination"
+          onClick={() => paginate(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </button>
 
         <br />
-        <br />
-        <br />
 
-        <div>
-          <button
-            className="pagination"
-            onClick={() => paginate(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-
-          <br />
-
-          <button
-            className="pagination"
-            onClick={() => paginate(currentPage + 1)}
-            disabled={currentPage === Math.ceil(cards.length / cardsPerPage)}
-          >
-            Next
-          </button>
-
-        </div>
-
-        <br />
-        <br />
-
+        <button
+          className="pagination"
+          onClick={() => paginate(currentPage + 1)}
+          disabled={currentPage === Math.ceil(cards.length / cardsPerPage)}
+        >
+          Next
+        </button>
       </div>
 
-    </>
-  );
+      <br />
+      <br />
+    </div>
+  </>
+);
 };
 
 export default Tour;

@@ -67,14 +67,27 @@ class Api::V1::PaymentsController < ApplicationController
     params.require(:payment).permit(:payment_type, :card_name, :card_number, :cvv, :expiration_date, :user_id)
   end
 
+  # Uses Base64.strict_encode64 to convert the card number and CVV values into encoded strings.
+  #
+  # Returns: Does not explicitly return a value.
   def encode_sensitive_data
+    # Encode the credit card number using Base64
     self.card_number = Base64.strict_encode64(card_number.to_s)
+
+    # Encode the CVV using Base64
     self.cvv = Base64.strict_encode64(cvv.to_s)
   end
 
+  # Uses Base64.strict_decode64 to convert the encoded strings of card number and CVV back to their original values.
+  #
+  # Returns: Does not explicitly return a value.
   def decode_sensitive_data
+    # Decode the credit card number using Base64
     self.card_number = Base64.strict_decode64(card_number.to_s)
+
+    # Decode the CVV using Base64
     self.cvv = Base64.strict_decode64(cvv.to_s)
   end
+
 
 end

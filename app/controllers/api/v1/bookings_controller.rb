@@ -53,11 +53,9 @@ class Api::V1::BookingsController < ApplicationController
   # This action is used to delete an existing booking from the database.
   def destroy
     if @booking.destroy
-      puts "Booking successfully deleted."
       render json: { success: "Booking successfully deleted.", id: @booking.id }
     else
-      puts "Error deleting the booking: #{@booking.errors.full_messages}"
-      render json: { error: "Error deleting the Booking" }, status: :unprocessable_entity
+      render json: { error: "Error deleting the Booking", details: @booking.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

@@ -27,6 +27,10 @@ module Lighthouse
     config.api_only = true
 
 
+    config.active_storage.variable_content_types = ['image/jpg']
+config.active_storage.silence_invalid_content_types_warning = true
+
+
     config.autoload_paths << Rails.root.join('app/services')
 
     # config/application.rb
